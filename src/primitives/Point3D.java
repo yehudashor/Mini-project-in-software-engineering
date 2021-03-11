@@ -4,7 +4,7 @@ import java.lang.Math;
 
 public class Point3D {
 
-	static Point3D zero = new Point3D(0, 0, 0);
+	public static Point3D ZERO = new Point3D(0, 0, 0);
 
 	Coordinate x;
 	Coordinate y;
@@ -43,19 +43,21 @@ public class Point3D {
 		return this.x.equals(p.x) && this.y.equals(p.y) && this.z.equals(p.z);
 	}
 
+	
 	/*
 	 * 
 	 */
 	public Vector subtract(Point3D point) {
-		return new Vector(point.x.coord - this.x.coord, point.y.coord - this.y.coord, point.z.coord - this.z.coord);
+		return new Vector(this.x.coord - point.x.coord 
+				,this.y.coord - point.y.coord, this.z.coord -  point.z.coord);
 	}
 
 	/*
 	 * 
 	 */
     public Point3D add(Vector vector) {
-    	return new Point3D(this.x.coord + vector.point.x.coord, this.y.coord + vector.point.y.coord,
-    			this.z.coord + vector.point.z.coord);
+    	return new Point3D(this.x.coord + vector.getHead().x.coord, this.y.coord + vector.getHead().y.coord,
+    			this.z.coord + vector.getHead().z.coord);
     }
     
     /*
@@ -71,6 +73,6 @@ public class Point3D {
      * 
      */
     public double distance(Point3D point) {
-    	return Math.sqrt(this.distance(point));
+    	return Math.sqrt(this.distanceSquared(point));
     }
 }
