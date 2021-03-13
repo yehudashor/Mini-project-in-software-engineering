@@ -1,12 +1,18 @@
 package primitives;
 
+/**
+ * 
+ * @authors Yehuda Shor and Israel Cohen
+ * Ray class represents a ray   
+ */
 public class Ray {
-	private Point3D p0;  
-	private Vector dir;
+	private Point3D p0;  // represent start point
+	private Vector dir;  // direction vector
 	
 	/**
-	 * @param p0
-	 * @param dir
+	 * constructor
+	 * @param p0 - point
+	 * @param dir - direction vector
 	 */
 	public Ray(Point3D p0, Vector dir) {
 		this.p0 = p0;
@@ -14,14 +20,14 @@ public class Ray {
 	}
 
 	/**
-	 * @return the p0
+	 * @return the point - p0
 	 */
 	public Point3D getP0() {
 		return p0;
 	}
 
 	/**
-	 * @return the dir
+	 * @return the direction vector - dir
 	 */
 	public Vector getDir() {
 		return dir;

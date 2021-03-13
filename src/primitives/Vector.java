@@ -1,15 +1,22 @@
 package primitives;
 
 import java.lang.Math;
-public class Vector {
-	private Point3D head;
 
-	/*
-	 * 
+/**
+ * 
+ * @authors Yehuda Shor and Israel Cohen
+ * Vector class represents vector
+ */
+public class Vector {
+	private Point3D head; // the vertex of the vector
+
+	/**
+	 * constructor, gets 3 parameters of Coordinate type
+	 * throw IllegalArgumentException exception in case the coordinates are (0,0,0) 
 	 */
 	public Vector(Coordinate x, Coordinate y, Coordinate z) {
 		head = new Point3D(x, y, z);
-		if (head.equals(new Point3D(0, 0, 0))) {
+		if (head.equals(Point3D.ZERO)) {
 			head = null;
 			throw new IllegalArgumentException("Illegal Vector");
 		}
@@ -23,13 +30,14 @@ public class Vector {
 	}
 
 
-	/*
-	 * 
+	/**
+	 * constructor, gets 3 parameters of double type
+	 * throw IllegalArgumentException exception in case the coordinates are (0,0,0) 
 	 */
 	public Vector(double x, double y, double z) {
 		head = new Point3D(x, y, z);
 
-		if (head.equals(new Point3D(0, 0, 0))) {
+		if (head.equals(Point3D.ZERO)) {
 			head = null;
 			throw new IllegalArgumentException("Illegal Vector");
 		}
@@ -45,31 +53,36 @@ public class Vector {
 		return this.head.equals(p.head);
 	}
 
-	/*
-	 * 
+	/**
+	 * constructor
+	 * @param point for the head point
 	 */
 	public Vector(Point3D point) {
 		this.head = point;
 	}
 
-	/*
-	 * 
+	/**
+	 * vector addition
+	 * @param other vector to add
+	 * @return a new vector
 	 */
 	public Vector add(Vector other) {
         return new Vector(this.head.add(other));
 	}
 
-	/*
-	 * 
+	/**
+	 * subtract a vector from the this vector
+	 * @param other vector to subtract
+	 * @return a new vector
 	 */
 	public Vector subtract(Vector other) {
 		return this.head.subtract(other.head);
 	}
 	
 	/**
-	 * 
-	 * @param scaler
-	 * @return
+	 * vector multiplication in scalar
+	 * @param scaler to multiplicate
+	 * @return new vector
 	 */
 	public Vector scale(double scaler){
 		return new Vector(scaler * this.head.x.coord, scaler *  this.head.y.coord, scaler *  this.head.z.coord);
@@ -78,25 +91,19 @@ public class Vector {
 	
 	
 	/**
-	 * 
-	 * @param other
-	 * @return
+	 * scalar multiplication
+	 * @param other vector to multiplicate
+	 * @return scalar
 	 */
 	public double dotProduct(Vector other){
 		return this.head.x.coord * other.head.x.coord +
 				this.head.y.coord * other.head.y.coord  + this.head.z.coord * other.head.z.coord;
 	}
 	
-	/*
-	 * 𝑢2 ∙ 𝑣3 − 𝑢3 ∙ 𝑣2 
-	 * 𝑢3 ∙ 𝑣1 − 𝑢1 ∙ 𝑣3 
-	 * 𝑢1 ∙ 𝑣2 − 𝑢2 ∙ 𝑣1
-	 */
-	
 	/**
-	 * 
-	 * @param other
-	 * @return
+	 * cross product
+	 * @param other vector to product
+	 * @return new vector
 	 */
 	public Vector crossProduct(Vector other){
 		double point1 = this.head.y.coord * other.head.z.coord - this.head.z.coord * other.head.y.coord;
@@ -106,26 +113,23 @@ public class Vector {
 	}
 	
 	/**
-	 * 
-	 * @param other
-	 * @return
+	 * @return the square length of the vector
 	 */
 	public double lengthSquared(){
+		// the length of vector is dot product with itself
 		return this.dotProduct(this);
 	}
 	
 	/**
-	 * 
-	 * @param other
-	 * @return
+	 * @return the length of the vector
 	 */
 	public double length() {
 		return Math.sqrt(this.lengthSquared());
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * normalize the vector
+	 * @return this vector normalized
 	 */
 	public Vector normalize(){
 	    this.head = new Point3D(this.head.x.coord / this.length(),
@@ -135,7 +139,7 @@ public class Vector {
 	
 	/**
 	 * 
-	 * @return
+	 * @return new normalized vector with same direction of this vector
 	 */
 	public Vector normalized(){
 		return new Vector(this.head).normalize();
