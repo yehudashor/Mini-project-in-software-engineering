@@ -8,7 +8,7 @@ public class Sphere implements Geometry {
 	private double radius;
 
 	/**
-	 * \
+	 * 
 	 * 
 	 * @param center
 	 * @param radius

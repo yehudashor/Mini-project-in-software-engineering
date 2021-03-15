@@ -6,8 +6,8 @@ import primitives.Vector;
 
 public class Tube implements Geometry {
 
-	private Ray axisRay;
-	private double radius;
+	protected Ray axisRay;
+	protected double radius;
 
 	/**
 	 * @param axisRay
