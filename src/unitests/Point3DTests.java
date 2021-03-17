@@ -3,38 +3,33 @@
  */
 package unitests;
 
+import static java.lang.System.out;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import primitives.Point3D;
+import primitives.Vector;
+
 /**
- * @author josh5
+ * Testing point
+ * 
+ * @author Yehuda Shor and Israel Cohen
  *
  */
 public class Point3DTests {
-
-	/**
-	 * Test method for {@link primitives.Point3D#Point3D(primitives.Coordinate, primitives.Coordinate, primitives.Coordinate)}.
-	 */
-	@Test
-	public void testPoint3DCoordinateCoordinateCoordinate() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link primitives.Point3D#Point3D(double, double, double)}.
-	 */
-	@Test
-	public void testPoint3DDoubleDoubleDouble() {
-		fail("Not yet implemented");
-	}
 
 	/**
 	 * Test method for {@link primitives.Point3D#subtract(primitives.Point3D)}.
 	 */
 	@Test
 	public void testSubtract() {
-		fail("Not yet implemented");
+		/**
+		 * TC1 --- the result is subtract.
+		 */
+		  Point3D p1 = new Point3D(1, 2, 3); 
+		  assertFalse("Point - Point does not work correctly",
+					 !new Vector(1, 1, 1).equals(new Point3D(2, 3, 4).subtract(p1)));
 	}
 
 	/**
@@ -42,23 +37,10 @@ public class Point3DTests {
 	 */
 	@Test
 	public void testAdd() {
-		fail("Not yet implemented");
+		/**
+		 * TC1 --- the result is the zero point.
+		 */
+		  Point3D p1 = new Point3D(1, 2, 3);
+		  assertEquals("Point + Vector does not work correctly", Point3D.ZERO, p1.add(new Vector(-1, -2, -3)));
 	}
-
-	/**
-	 * Test method for {@link primitives.Point3D#distanceSquared(primitives.Point3D)}.
-	 */
-	@Test
-	public void testDistanceSquared() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link primitives.Point3D#distance(primitives.Point3D)}.
-	 */
-	@Test
-	public void testDistance() {
-		fail("Not yet implemented");
-	}
-
 }
