@@ -16,8 +16,8 @@ import primitives.Vector;
 /**
  * Testing Vector
  * 
- * @author Yehuda Shor and Israel Cohen
- *
+ * @authors Yehuda Shor 20761055 yehudashor789@gmail.com
+ * @authors Israel Cohen 203250170 josh50170@gmail.com *
  */
 public class VectorTests {
 
@@ -32,12 +32,11 @@ public class VectorTests {
 		Vector v1 = new Vector(1, 2, 3);
 		assertThrows("Vector + Vector does not work correctly", IllegalArgumentException.class,
 				() -> v1.add(new Vector(-1, -2, -3)));
-		
+
 		/**
 		 * TC 02: test addition vector to another
 		 */
-		assertEquals("Vector + Vector does not work correctly", new Vector(3, 3, 3),
-		 v1.add(new Vector(2,1,0)));
+		assertEquals("Vector + Vector does not work correctly", new Vector(3, 3, 3), v1.add(new Vector(2, 1, 0)));
 	}
 
 	/**
@@ -51,12 +50,11 @@ public class VectorTests {
 		Vector v1 = new Vector(1, 2, 3);
 		assertEquals("Vector - Vector does not work correctly", new Vector(3, 3, 3),
 				v1.subtract(new Vector(-2, -1, 0)));
-		
+
 		/**
 		 * TC 02: test the result the zero vector
 		 */
-		assertThrows("Vector - Vector does not work correctly", IllegalArgumentException.class,
-				() -> v1.subtract(v1));
+		assertThrows("Vector - Vector does not work correctly", IllegalArgumentException.class, () -> v1.subtract(v1));
 	}
 
 	/**

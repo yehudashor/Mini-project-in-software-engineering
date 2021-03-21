@@ -5,7 +5,8 @@ import java.lang.Math;
 /**
  * Vector class represents vector
  * 
- * @authors Yehuda Shor and Israel Cohen
+ * @authors Yehuda Shor 20761055 yehudashor789@gmail.com
+ * @authors Israel Cohen 203250170 josh50170@gmail.com
  */
 public class Vector {
 	/**
@@ -156,8 +157,7 @@ public class Vector {
 	 */
 	public Vector normalize() {
 		double length = this.length();
-		this.head = new Point3D(this.head.x.coord / length, this.head.y.coord / length,
-				this.head.z.coord / length);
+		this.head = new Point3D(this.head.x.coord / length, this.head.y.coord / length, this.head.z.coord / length);
 		return this;
 	}
 

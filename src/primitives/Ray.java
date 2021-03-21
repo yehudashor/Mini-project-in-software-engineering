@@ -3,7 +3,8 @@ package primitives;
 /**
  * Ray class represents a ray
  * 
- * @authors Yehuda Shor and Israel Cohen
+ * @authors Yehuda Shor 20761055 yehudashor789@gmail.com
+ * @authors Israel Cohen 203250170 josh50170@gmail.com
  */
 public class Ray {
 	/**

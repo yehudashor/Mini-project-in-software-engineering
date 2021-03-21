@@ -14,8 +14,8 @@ import primitives.Vector;
 /**
  * Testing point
  * 
- * @author Yehuda Shor and Israel Cohen
- *
+ * @authors Yehuda Shor 20761055 yehudashor789@gmail.com
+ * @authors Israel Cohen 203250170 josh50170@gmail.com *
  */
 public class Point3DTests {
 
@@ -25,11 +25,11 @@ public class Point3DTests {
 	@Test
 	public void testSubtract() {
 		/**
-		 * TC1 --- the result is subtract.
+		 * TC 01 --- the result is subtract.
 		 */
-		  Point3D p1 = new Point3D(1, 2, 3); 
-		  assertFalse("Point - Point does not work correctly",
-					 !new Vector(1, 1, 1).equals(new Point3D(2, 3, 4).subtract(p1)));
+		Point3D p1 = new Point3D(1, 2, 3);
+		assertFalse("Point - Point does not work correctly",
+				!new Vector(1, 1, 1).equals(new Point3D(2, 3, 4).subtract(p1)));
 	}
 
 	/**
@@ -38,9 +38,9 @@ public class Point3DTests {
 	@Test
 	public void testAdd() {
 		/**
-		 * TC1 --- the result is the zero point.
+		 * TC 01 --- the result is the zero point.
 		 */
-		  Point3D p1 = new Point3D(1, 2, 3);
-		  assertEquals("Point + Vector does not work correctly", Point3D.ZERO, p1.add(new Vector(-1, -2, -3)));
+		Point3D p1 = new Point3D(1, 2, 3);
+		assertEquals("Point + Vector does not work correctly", Point3D.ZERO, p1.add(new Vector(-1, -2, -3)));
 	}
 }

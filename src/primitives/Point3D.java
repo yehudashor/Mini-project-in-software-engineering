@@ -4,7 +4,9 @@ import java.lang.Math;
 
 /**
  * A class describing a point in three dimensions
- * @author yehuda shor and israel cohen 
+ * 
+ * @authors Yehuda Shor 20761055 yehudashor789@gmail.com
+ * @authors Israel Cohen 203250170 josh50170@gmail.com
  */
 public class Point3D {
 
@@ -28,6 +30,7 @@ public class Point3D {
 
 	/**
 	 * constructor, gets parameters of coordinate type
+	 * 
 	 * @param x Coordinate x
 	 * @param y Coordinate y
 	 * @param z Coordinate z
@@ -40,6 +43,7 @@ public class Point3D {
 
 	/**
 	 * constructor, gets parameters of double type
+	 * 
 	 * @param x Coordinate x
 	 * @param y Coordinate y
 	 * @param z Coordinate z
