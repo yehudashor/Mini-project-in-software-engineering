@@ -25,9 +25,9 @@ public class PlaneTest {
 	 */
 	@Test
 	public void testPlanePoint3DPoint3DPoint3D() {
-		/**
-		 * TC 01: tests the three points which given are not on the same line
-		 */
+        // ============ Equivalence Partitions Tests ==============
+		
+		// TC 01: tests the three points which given are not on the same line
 		Point3D x = new Point3D(1, 2, 3);
 		Point3D y = new Point3D(2, 4, 6);
 		Point3D z = new Point3D(-1.5, -3, -4.5);
@@ -40,10 +40,9 @@ public class PlaneTest {
 	 */
 	@Test
 	public void testGetNormalPoint3D() {
-
-		/**
-		 * TC 01: tests the calculation of the normal
-		 */
+        // ============ Equivalence Partitions Tests ==============
+		
+		// TC 01: tests the calculation of the normal
 		Point3D a = new Point3D(1, 2, 3);
 		Point3D b = new Point3D(2, 1, 4);
 		Point3D c = new Point3D(2, 1, 1);

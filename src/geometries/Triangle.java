@@ -9,9 +9,14 @@ import primitives.Point3D;
  * @authors Israel Cohen 203250170 josh50170@gmail.com *
  */
 public class Triangle extends Polygon {
-
-	public Triangle(Point3D... vertices) {
-		super(vertices);
+	/**
+	 * constructor
+	 * @param a point a
+	 * @param b point b
+	 * @param c point c
+	 */
+	public Triangle(Point3D a, Point3D b, Point3D c) {
+		super(a, b, c);
 	}
 
 }

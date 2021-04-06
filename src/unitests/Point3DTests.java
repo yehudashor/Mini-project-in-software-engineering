@@ -24,9 +24,9 @@ public class Point3DTests {
 	 */
 	@Test
 	public void testSubtract() {
-		/**
-		 * TC 01 --- the result is subtract.
-		 */
+		// ============ Equivalence Partitions Tests ==============
+
+		// TC 01 --- the result is subtract.
 		Point3D p1 = new Point3D(1, 2, 3);
 		assertFalse("Point - Point does not work correctly",
 				!new Vector(1, 1, 1).equals(new Point3D(2, 3, 4).subtract(p1)));
@@ -37,9 +37,9 @@ public class Point3DTests {
 	 */
 	@Test
 	public void testAdd() {
-		/**
-		 * TC 01 --- the result is the zero point.
-		 */
+		// ============ Equivalence Partitions Tests ==============
+
+		// TC 01 --- the result is the zero point.
 		Point3D p1 = new Point3D(1, 2, 3);
 		assertEquals("Point + Vector does not work correctly", Point3D.ZERO, p1.add(new Vector(-1, -2, -3)));
 	}

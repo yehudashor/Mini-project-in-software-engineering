@@ -15,22 +15,6 @@ public class Vector {
 	private Point3D head;
 
 	/**
-	 * constructor, gets parameters of coordinate type
-	 * 
-	 * @param x Coordinate x
-	 * @param y Coordinate y
-	 * @param z Coordinate z
-	 * @throws IllegalArgumentException exception in case the coordinates are
-	 *                                  (0,0,0)
-	 */
-	public Vector(Coordinate x, Coordinate y, Coordinate z) {
-		head = new Point3D(x, y, z);
-		if (head.equals(Point3D.ZERO)) {
-			throw new IllegalArgumentException("Illegal Vector");
-		}
-	}
-
-	/**
 	 * get head
 	 * 
 	 * @return the head

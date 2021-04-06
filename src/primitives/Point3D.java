@@ -29,19 +29,6 @@ public class Point3D {
 	final Coordinate z;
 
 	/**
-	 * constructor, gets parameters of coordinate type
-	 * 
-	 * @param x Coordinate x
-	 * @param y Coordinate y
-	 * @param z Coordinate z
-	 */
-	public Point3D(Coordinate x, Coordinate y, Coordinate z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
-
-	/**
 	 * constructor, gets parameters of double type
 	 * 
 	 * @param x Coordinate x
@@ -88,6 +75,27 @@ public class Point3D {
 	public Point3D add(Vector vector) {
 		return new Point3D(this.x.coord + vector.getHead().x.coord, this.y.coord + vector.getHead().y.coord,
 				this.z.coord + vector.getHead().z.coord);
+	}
+
+	/**
+	 * @return the x
+	 */
+	public double getX() {
+		return x.coord;
+	}
+
+	/**
+	 * @return the y
+	 */
+	public  double getY() {
+		return y.coord;
+	}
+
+	/**
+	 * @return the z
+	 */
+	public double  getZ() {
+		return z.coord;
 	}
 
 	/**

@@ -1,6 +1,10 @@
 package geometries;
 
+import java.util.ArrayList;
+import java.util.List;
 import primitives.Point3D;
+import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
 /**
@@ -35,6 +39,40 @@ public class Sphere implements Geometry {
 	@Override
 	public Vector getNormal(Point3D point) {
 		return point.subtract(this.center).normalize();
+	}
+
+	@Override
+	public List<Point3D> findIntersections(Ray ray) {
+
+		Vector u = center.subtract(ray.getP0());
+		double dis = ray.getDir().dotProduct(u);
+		double d = Math.sqrt(u.lengthSquared() - dis * dis);
+		if (Util.isZero(d - radius) || d - radius >= 0)
+			return null;
+
+		double innerDis = Math.sqrt(radius * radius - d * d);
+		double scal1 = dis - innerDis;
+		double scal2 = dis + innerDis;
+		Point3D a = null, b = null;
+		
+		if (!Util.isZero(scal1) && scal1 > 0) {
+			a = ray.getP0().add(ray.getDir().scale(scal1));
+		}
+
+		if (!Util.isZero(scal2) && scal2 > 0) {
+			b = ray.getP0().add(ray.getDir().scale(scal2));
+		}
+
+		if (a == null && b == null)
+			return null;
+
+		List<Point3D> intersections = new ArrayList<Point3D>();
+		if (a != null)
+			intersections.add(a);
+		if (b != null)
+			intersections.add(b);
+		return intersections;
+
 	}
 
 }

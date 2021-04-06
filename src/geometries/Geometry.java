@@ -8,7 +8,7 @@ import primitives.*;
  * @authors Yehuda Shor 20761055 yehudashor789@gmail.com
  * @authors Israel Cohen 203250170 josh50170@gmail.com *
  */
-public interface Geometry {
+public interface Geometry extends Intersectable {
 	/**
 	 * get normal to a shape in some point
 	 * 

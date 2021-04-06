@@ -1,8 +1,11 @@
 package geometries;
 
+import java.util.List;
+
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
+
 
 /**
  * Tube class represent tube
@@ -37,12 +40,18 @@ public class Tube implements Geometry {
 	public Vector getNormal(Point3D point) {
 		double dif = this.axisRay.getDir().dotProduct(point.subtract(this.axisRay.getP0()));
 
-		if (dif != 0) {
+		if (!primitives.Util.isZero(dif)) {
 			Point3D p = this.axisRay.getP0().add(this.axisRay.getDir().scale(dif));
 			return point.subtract(p).normalize();
 		} else {
 			return point.subtract(this.axisRay.getP0()).normalize();
 		}
+	}
+
+	@Override
+	public List<Point3D> findIntersections(Ray ray) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
