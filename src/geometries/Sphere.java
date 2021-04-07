@@ -43,8 +43,16 @@ public class Sphere implements Geometry {
 
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
+		Vector u;
+		try {
+			u = center.subtract(ray.getP0());
 
-		Vector u = center.subtract(ray.getP0());
+		} catch (IllegalArgumentException e) {
+			List<Point3D> intersections = new ArrayList<Point3D>();
+			intersections.add(center.add(ray.getDir().scale(radius)));
+			return intersections;
+
+		}
 		double dis = ray.getDir().dotProduct(u);
 		double d = Math.sqrt(u.lengthSquared() - dis * dis);
 		if (Util.isZero(d - radius) || d - radius >= 0)
@@ -54,7 +62,7 @@ public class Sphere implements Geometry {
 		double scal1 = dis - innerDis;
 		double scal2 = dis + innerDis;
 		Point3D a = null, b = null;
-		
+
 		if (!Util.isZero(scal1) && scal1 > 0) {
 			a = ray.getP0().add(ray.getDir().scale(scal1));
 		}
@@ -67,9 +75,9 @@ public class Sphere implements Geometry {
 			return null;
 
 		List<Point3D> intersections = new ArrayList<Point3D>();
-		if (a != null)
+		if (a != null && !a.equals(ray.getP0()))
 			intersections.add(a);
-		if (b != null)
+		if (b != null && !b.equals(ray.getP0()))
 			intersections.add(b);
 		return intersections;
 

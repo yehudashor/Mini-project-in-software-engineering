@@ -1,5 +1,6 @@
 package geometries;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import primitives.*;
@@ -71,8 +72,25 @@ public class Plane implements Geometry {
 
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
-		// TODO Auto-generated method stub
-		return null;
+		double numerator;
+		try {
+			numerator = normal.dotProduct(q0.subtract(ray.getP0()));
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+		double denumerator = normal.dotProduct(ray.getDir());
+		if( Util.isZero(numerator) || Util.alignZero(denumerator) == 0 || numerator / denumerator < 0 )
+			return null;
+		
+		//if(normal.dotProduct(ray.getDir()) == 0)
+			//return null;
+		
+		double dis = numerator / denumerator;
+		
+		List<Point3D> intersection = new ArrayList<>();
+		intersection.add(ray.getP0().add(ray.getDir().scale(dis)));		
+		return intersection;
+		
 	}
 
 }
