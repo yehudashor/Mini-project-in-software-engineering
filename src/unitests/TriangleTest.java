@@ -39,6 +39,7 @@ public class TriangleTest {
 		assertNull("Ray's start before the triangle and Intersect", t.findIntersections(r));
 
 		// TC03: Ray's Intersect against the vertex (0 points) ---------------------------------
+		r = new Ray(rayPoint, new Vector(0, -2.5, 1));
 		assertNull("Ray's start before the triangle and Intersect", t.findIntersections(r));
 		// -------------------------------------------------------------------------------------
 		

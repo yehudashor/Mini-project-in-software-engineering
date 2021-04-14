@@ -4,6 +4,7 @@
 package geometries;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import primitives.Point3D;
@@ -17,35 +18,53 @@ import primitives.Ray;
  */
 
 public class Geometries implements Intersectable {
+
+	/**
+	 * List of shapes
+	 */
 	List<Intersectable> intersectable;
 
 	/**
-	 * 
+	 * Default constructor
 	 */
 	public Geometries() {
-		intersectable = new ArrayList<Intersectable>();
+		intersectable = new LinkedList<Intersectable>();
 	}
-	
+
 	/**
+	 * constructor
 	 * 
-	 * @param geometries
+	 * @param geometries : shapes
 	 */
-	public Geometries(Intersectable... geometries){
+	public Geometries(Intersectable... geometries) {
 		intersectable = List.of(geometries);
 	}
-	
+
 	/**
-	 * 
-	 * @param geometries
+	 * add shapes
+	 * @param geometries : shapes to add
 	 */
-	 public void add(Intersectable... geometries){
-		 intersectable.addAll(List.of(geometries));
-	 }
+	public void add(Intersectable... geometries) {
+		intersectable.addAll(List.of(geometries));
+	}
 	
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
-		// TODO Auto-generated method stub
-		return null;
+		if (intersectable.size() == 0)
+			return null;
+		
+		List<Point3D> points = null;
+		
+		for (Intersectable it : intersectable) {
+			var points1 = it.findIntersections(ray);
+			if (points1 != null) {
+				if (points == null)
+					points = new LinkedList<Point3D>();
+				points.addAll(points1);
+			}
+		}
+
+		return points;
 	}
 
 }

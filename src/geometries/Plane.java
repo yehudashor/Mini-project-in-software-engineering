@@ -1,6 +1,7 @@
 package geometries;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import primitives.*;
@@ -38,8 +39,8 @@ public class Plane implements Geometry {
 	 * @param q2 third point
 	 */
 	public Plane(Point3D q0, Point3D q1, Point3D q2) {
-		Vector v = q0.subtract(q1);
-		Vector u = q0.subtract(q2);
+		Vector v = q1.subtract(q0);
+		Vector u = q2.subtract(q0);
 		normal = v.crossProduct(u).normalize();
 		this.q0 = q0;
 	}
@@ -87,8 +88,8 @@ public class Plane implements Geometry {
 		
 		double dis = numerator / denumerator;
 		
-		List<Point3D> intersection = new ArrayList<>();
-		intersection.add(ray.getP0().add(ray.getDir().scale(dis)));		
+		List<Point3D> intersection = new LinkedList<>();
+		intersection.add(ray.GetPoint(dis));		
 		return intersection;
 		
 	}

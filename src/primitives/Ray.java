@@ -60,4 +60,12 @@ public class Ray {
 		return "Ray [p0=" + p0 + ", dir=" + dir + "]";
 	}
 
+	/**
+	 * calculate 
+	 * @param t
+	 * @return
+	 */
+	public Point3D GetPoint(double t){
+		return p0.add(dir.scale(t));
+	}
 }

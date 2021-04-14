@@ -64,13 +64,6 @@ public class Triangle extends Polygon {
 				return intersection;
 			}
 			
-			/*
-			for (int j = 1; j < scalars.length; ++j) {
-				if((scalars[j - 1] > 0 && scalars[j] < 0) || (scalars[j - 1] < 0 && scalars[j] > 0))
-						return null;
-			}	
-			*/
-			
 		}
 		
 		return null;	
