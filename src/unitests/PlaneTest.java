@@ -90,7 +90,13 @@ public class PlaneTest {
 		
 		
 		// TC05: Ray parallel to the plane (0 point)
-
+		
+		
+		// TC06
+		
+		// TC07
+		
+		// TC08
 	}
 
 }

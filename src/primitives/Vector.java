@@ -108,7 +108,7 @@ public class Vector {
 	 * cross product
 	 * 
 	 * @param other vector to product
-	 * @return new vector
+	 * @return new vector |this x other|
 	 */
 	public Vector crossProduct(Vector other) {
 		double point1 = this.head.y.coord * other.head.z.coord - this.head.z.coord * other.head.y.coord;
