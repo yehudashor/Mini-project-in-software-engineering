@@ -1,10 +1,8 @@
 package geometries;
 
 import java.util.List;
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Util;
-import primitives.Vector;
+import primitives.*;
+import static primitives.Util.*;
 
 /**
  * represent triangle
@@ -25,47 +23,26 @@ public class Triangle extends Polygon {
 	}
 
 	@Override
-	public List<Point3D> findIntersections(Ray ray) {	
+	public List<Point3D> findIntersections(Ray ray) {
 		List<Point3D> intersection = plane.findIntersections(ray);
-		if(intersection != null) {
-			
-			Vector vectros[] = new Vector[3];
-			for(int i = 0; i < 3; ++i) {
-				vectros[i] = vertices.get(i).subtract(ray.getP0());
-			}
-			
-			Vector normals[] = new Vector[3];
-			double[] scalars = new double[3];
-			int i;
-			for(i = 0; i < 2; ++i) {
-				normals[i] = vectros[i].crossProduct(vectros[i + 1]);
-				scalars[i] = Util.alignZero(ray.getDir().dotProduct(normals[i]));
-				
-				if(0 == scalars[i])
-					return null;
-			}
-			normals[i] = vectros[i].crossProduct(vectros[0]);
-			scalars[i] = Util.alignZero(ray.getDir().dotProduct(normals[i]));
-			if(0 == scalars[i])
-				return null;
-			int count = 0;
-			int	count1 = 0;
-			for(int k = 0; k < scalars.length; k++)
-			{
-				if(scalars[k] > 0){
-					count++;
-				}
-				if(scalars[k] < 0){
-					count1++;
-				}
-			}
-			if(count == scalars.length || count1 == scalars.length)
-			{
+		if (intersection != null) {
+			Point3D p0 = ray.getP0();
+			Vector v = ray.getDir();
+			Vector v1 = vertices.get(0).subtract(p0);
+			Vector v2 = vertices.get(1).subtract(p0);
+			Vector v3 = vertices.get(2).subtract(p0);
+			Vector n1 = v1.crossProduct(v2);
+			Vector n2 = v2.crossProduct(v3);
+			Vector n3 = v3.crossProduct(v1);
+			double s1 = alignZero(v.dotProduct(n1));
+			double s2 = alignZero(v.dotProduct(n2));
+			double s3 = alignZero(v.dotProduct(n3));
+
+			if ((s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0))
 				return intersection;
-			}
-			
+			return null;
 		}
-		
-		return null;	
+
+		return null;
 	}
 }

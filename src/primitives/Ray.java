@@ -65,7 +65,7 @@ public class Ray {
 	 * @param t
 	 * @return
 	 */
-	public Point3D GetPoint(double t){
+	public Point3D getPoint(double t){
 		return p0.add(dir.scale(t));
 	}
 }

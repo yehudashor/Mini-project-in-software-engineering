@@ -57,13 +57,13 @@ public class Camera {
 	 */
 	public Camera(Point3D p0, Vector vTo, Vector vUp) {
 
-		if (Util.alignZero(vTo.dotProduct(vUp)) != 0) {
+		if (!Util.isZero(vTo.dotProduct(vUp))) {
 			throw new IllegalArgumentException("The vectors vTo and vUp are not orthogonals");
 		}
 		this.p0 = p0;
 		this.vTo = vTo.normalized();
 		this.vUp = vUp.normalized();
-		this.vRight = vTo.crossProduct(vUp).normalized();
+		this.vRight = vTo.crossProduct(vUp).normalize();
 
 	}
 
@@ -131,12 +131,12 @@ public class Camera {
 	 *         the pixel
 	 */
 	public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
-		Point3D pCenter = p0.add(vTo.scale(distance));// 0,0,10
-		double pixelHeight = height / nY;// 2
-		double pixelWidth = width / nX;// 2
-		double heighFromPc = -((i - (nY - 1) / 2) * pixelHeight);//-3
-		double widthFromPc = (j - (nX - 1) / 2) * pixelWidth;//-3
-		Point3D pIJ = pCenter;//0,0,0
+		Point3D pCenter = p0.add(vTo.scale(distance));
+		double pixelHeight = height / nY;
+		double pixelWidth = width / nX;
+		double heighFromPc = -((i - (nY - 1) / 2d) * pixelHeight);
+		double widthFromPc = (j - (nX - 1) / 2d) * pixelWidth;
+		Point3D pIJ = pCenter;
 
 		if (heighFromPc != 0) {
 			pIJ = pIJ.add(vUp.scale(heighFromPc));

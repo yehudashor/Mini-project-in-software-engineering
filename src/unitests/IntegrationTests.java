@@ -28,27 +28,30 @@ import primitives.Vector;
  */
 public class IntegrationTests {
 
-	// Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, 1), new Vector(0,
-	// -1, 0)).setDistance(1)
-	// .setViewPlaneSize(3, 3);
-
 	public static LinkedList<Ray> rays = new LinkedList<>();
+	private static Vector vTo = new Vector(0, 0, -1);
+	private static Vector vUp = new Vector(0, 1, 0);
+	private static Camera camera = new Camera(Point3D.ZERO, vTo, vUp).setDistance(1).setViewPlaneSize(3, 3);
 
-	Vector v[] = new Vector[] { new Vector(0, 0, -1), new Vector(1, 0, -1), new Vector(-1, 0, -1),
-			new Vector(0, -1, -1), new Vector(0, 1, -1), new Vector(1, 1, -1), new Vector(1, -1, -1),
-			new Vector(-1, 1, -1), new Vector(-1, -1, -1) };
+//	Vector v[] = new Vector[] { new Vector(0, 0, -1), new Vector(1, 0, -1), new Vector(-1, 0, -1),
+//			new Vector(0, -1, -1), new Vector(0, 1, -1), new Vector(1, 1, -1), new Vector(1, -1, -1),
+//			new Vector(-1, 1, -1), new Vector(-1, -1, -1) };
 
-	private void initRays(Point3D p) {
-		for (int i = 0; i < 9; i++) {
-			rays.add(new Ray(p, v[i]));
+	private void initRays() {
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				rays.add(camera.constructRayThroughPixel(3, 3, i, j));
+			}
 		}
 	}
 
 	private int sumOfIntersections(Intersectable i, LinkedList<Ray> rays) {
 		int sum = 0;
+
 		for (Ray ray : rays) {
-			if (i.findIntersections(ray) != null) {
-				sum += i.findIntersections(ray).size();
+			List<Point3D> j = i.findIntersections(ray);
+			if (j != null) {
+				sum += j.size();
 			}
 		}
 		return sum;
@@ -59,18 +62,19 @@ public class IntegrationTests {
 	 */
 	@Test
 	public void cameraSphereIntersections() {
-		Sphere s = new Sphere(new Point3D(0, 0, -3), 1);
-		initRays(Point3D.ZERO);
 
 		// TC01 Sphere is in front of the camera (2 points)
+		initRays();
+		Sphere s = new Sphere(new Point3D(0, 0, -3), 1);
 		assertEquals("Sphere is in front of the camera", 2, sumOfIntersections(s, rays));
 		rays.clear();
 
+		// TC02 Sphere is in front of the camera (18 points)
 		s = new Sphere(new Point3D(0, 0, -2.5), 2.5);
 		Point3D p = new Point3D(0, 0, 0.5);
-		initRays(p);
+		camera = new Camera(p, vTo, vUp).setDistance(1).setViewPlaneSize(3, 3);
+		initRays();
 
-		// TC02 Sphere is in front of the camera (18 points)
 		assertEquals("Sphere is in front of the camera (18 points)", 18, sumOfIntersections(s, rays));
 
 		s = new Sphere(new Point3D(0, 0, -2), 2);
@@ -128,5 +132,4 @@ public class IntegrationTests {
 		// TC02 The triangle parallel to the view plane (2 points)
 		assertEquals("The triangle parallel to the view plane (2 points)", 2, sumOfIntersections(triangle, rays));
 	}
-
 }

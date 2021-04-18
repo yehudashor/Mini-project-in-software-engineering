@@ -1,11 +1,8 @@
 package geometries;
 
-import java.util.ArrayList;
 import java.util.List;
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Util;
-import primitives.Vector;
+import primitives.*;
+import static primitives.Util.*;
 
 /**
  * represent sphere
@@ -46,42 +43,25 @@ public class Sphere implements Geometry {
 		Vector u;
 		try {
 			u = center.subtract(ray.getP0());
-
 		} catch (IllegalArgumentException e) {
-			List<Point3D> intersections = new ArrayList<Point3D>();
-			//intersections.add(center.add(ray.getDir().scale(radius)));
-			intersections.add(ray.GetPoint(radius));
-			return intersections;
-
+			return List.of(ray.getPoint(radius));
 		}
+
 		double dis = ray.getDir().dotProduct(u);
 		double d = Math.sqrt(u.lengthSquared() - dis * dis);
-		if (Util.isZero(d - radius) || d - radius >= 0)
+		if (alignZero(d - radius) >= 0)
 			return null;
 
 		double innerDis = Math.sqrt(radius * radius - d * d);
-		double scal1 = dis - innerDis;
-		double scal2 = dis + innerDis;
-		Point3D a = null, b = null;
-
-		if (!Util.isZero(scal1) && scal1 > 0) {
-			a = ray.GetPoint(scal1);
-		}
-
-		if (!Util.isZero(scal2) && scal2 > 0) {
-			b = ray.GetPoint(scal2);
-		}
-
-		if (a == null && b == null)
+		double scal2 = alignZero(dis + innerDis);
+		if (scal2 <= 0)
 			return null;
 
-		List<Point3D> intersections = new ArrayList<Point3D>();
-		if (a != null && !a.equals(ray.getP0()))
-			intersections.add(a);
-		if (b != null && !b.equals(ray.getP0()))
-			intersections.add(b);
-		return intersections;
+		double scal1 = alignZero(dis - innerDis);
 
+		return scal1 <= 0 //
+				? List.of(ray.getPoint(scal2)) //
+				: List.of(ray.getPoint(scal1), ray.getPoint(scal2));
 	}
 
 }

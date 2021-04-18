@@ -9,6 +9,7 @@ import java.lang.Math;
  * @authors Israel Cohen 203250170 josh50170@gmail.com
  */
 public class Vector {
+
 	/**
 	 * the vertex of the vector
 	 */
@@ -154,4 +155,8 @@ public class Vector {
 		return new Vector(this.head).normalize();
 	}
 
+	@Override
+	public String toString() {
+		return "Vector("+head.x.coord+","+head.y.coord+","+head.z.coord+")";
+	}
 }
