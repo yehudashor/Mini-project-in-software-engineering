@@ -9,6 +9,7 @@ import java.util.MissingResourceException;
 
 import elements.Camera;
 import primitives.Color;
+import primitives.Ray;
 import scene.Scene;
 
 /**
@@ -80,10 +81,15 @@ public class Render {
 		if (imageWriter == null || scene == null || camera == null || rayTracer == null) {
 			throw new MissingResourceException("One or more from the parmetrs are null", null, null);
 		}
-		
-	//	for ( Camera it : camera.)
-		//}
-		//fail("NotImplementedException");
+		int nX = imageWriter.getNx();
+		int nY = imageWriter.getNy();
+		Ray ray;
+		for(int i = 0; i < nX; ++i) {
+			for (int j = 0; j < nY; ++j) {
+				ray = camera.constructRayThroughPixel(nX, nY, i, j);
+				imageWriter.writePixel(i, j, rayTracer.traceRay(ray));
+			}
+		}
 	}
 
 	/**
@@ -92,7 +98,18 @@ public class Render {
 	 * @param color
 	 */
 	public void printGrid(int interval, Color color) {
-
+		int nX = imageWriter.getNx();
+		int nY = imageWriter.getNy();
+		int gap;
+		for(int i = 0; i < nX; ++i) {
+			if((i / (double)interval) % 10 == 0)
+				gap = 1;
+			else
+				gap = interval;
+			for(int j = 0; j < nY; j += gap) {
+				imageWriter.writePixel(i, j, color);
+			}
+		}
 	}
 
 	/**
