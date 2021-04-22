@@ -56,7 +56,7 @@ public class IntegrationTests {
 		}
 		return sum;
 	}
-
+	
 	/**
 	 * test of Sphere
 	 */

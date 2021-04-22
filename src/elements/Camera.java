@@ -144,10 +144,6 @@ public class Camera {
 		if (widthFromPc != 0) {
 			pIJ = pIJ.add(vRight.scale(widthFromPc));
 		}
-		try {
 			return new Ray(p0, pIJ.subtract(p0));
-		} catch (IllegalArgumentException e) {
-			return null;
-		}
 	}
 }

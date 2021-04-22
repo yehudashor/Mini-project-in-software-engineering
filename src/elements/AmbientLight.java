@@ -15,11 +15,12 @@ import primitives.Color;
 public class AmbientLight {
 	
 	/**
-	 * intensity of the color from Ambient Light
+	 * intensity of the color from Ambient Light.
 	 */
 	private Color intensity;
 
 	/**
+	 * Ambient Light
 	 * @param iA
 	 * @param kA
 	 */
@@ -28,6 +29,7 @@ public class AmbientLight {
 	}
 
 	/**
+	 * get intensity
 	 * @return the intensity
 	 */
 	public Color getIntensity() {
