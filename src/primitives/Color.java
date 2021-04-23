@@ -18,6 +18,8 @@ public class Color {
 	private double b = 0.0;
 
 	public static final Color BLACK = new Color();
+	public static final Color GREEN = new Color();
+	public static final Color RED = new Color();
 
 	/**
 	 * Default constructor - to generate Black Color (privately)

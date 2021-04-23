@@ -20,29 +20,30 @@ import scene.Scene;
  *
  */
 public class Render {
-	
+
 	/**
 	 * imageWriter
 	 */
 	private ImageWriter imageWriter;
-	
+
 	/**
 	 * scene
 	 */
 	private Scene scene;
-	
+
 	/**
 	 * camera
 	 */
 	private Camera camera;
-	
+
 	/**
-	 *  rayTracer
+	 * rayTracer
 	 */
 	private RayTracerBase rayTracer;
 
 	/**
 	 * set
+	 * 
 	 * @param imageWriter the imageWriter to set
 	 */
 	public Render setImageWriter(ImageWriter imageWriter) {
@@ -52,6 +53,7 @@ public class Render {
 
 	/**
 	 * set
+	 * 
 	 * @param scene the scene to set
 	 */
 	public Render setScene(Scene scene) {
@@ -61,6 +63,7 @@ public class Render {
 
 	/**
 	 * set
+	 * 
 	 * @param camera the camera to set
 	 */
 	public Render setCamera(Camera camera) {
@@ -70,6 +73,7 @@ public class Render {
 
 	/**
 	 * set
+	 * 
 	 * @param rayTracer the rayTracer to set
 	 */
 	public Render setRayTracer(RayTracerBase rayTracer) {
@@ -84,7 +88,7 @@ public class Render {
 		int nX = imageWriter.getNx();
 		int nY = imageWriter.getNy();
 		Ray ray;
-		for(int i = 0; i < nX; ++i) {
+		for (int i = 0; i < nX; ++i) {
 			for (int j = 0; j < nY; ++j) {
 				ray = camera.constructRayThroughPixel(nX, nY, i, j);
 				imageWriter.writePixel(i, j, rayTracer.traceRay(ray));
@@ -93,20 +97,17 @@ public class Render {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param interval
 	 * @param color
 	 */
 	public void printGrid(int interval, Color color) {
 		int nX = imageWriter.getNx();
 		int nY = imageWriter.getNy();
-		int gap;
-		for(int i = 0; i < nX; ++i) {
-			if((i / (double)interval) % 10 == 0)
-				gap = 1;
-			else
-				gap = interval;
-			for(int j = 0; j < nY; j += gap) {
+		int gap = 1;
+		for (int i = 0; i < nX; i++) {
+			gap = i % interval == 0 ? 1 : interval;
+			for (int j = 0; j < nY; j += gap) {
 				imageWriter.writePixel(i, j, color);
 			}
 		}
@@ -118,7 +119,7 @@ public class Render {
 	public void writeToImage() {
 
 		if (imageWriter != null) {
-			renderImage();
+			imageWriter.writeToImage();
 		} else {
 			throw new MissingResourceException("One or more from the parmetrs are null", null, null);
 		}
