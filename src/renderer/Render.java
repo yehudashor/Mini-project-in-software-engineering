@@ -104,7 +104,7 @@ public class Render {
 	 * print grid on the picture
 	 * 
 	 * @param interval : size of each square in the grid.
-	 * @param color    of the grid
+	 * @param color of the grid
 	 */
 	public void printGrid(int interval, Color color) {
 		int nX = imageWriter.getNx();
