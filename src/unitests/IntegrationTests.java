@@ -28,14 +28,14 @@ import primitives.Vector;
  */
 public class IntegrationTests {
 
-	public static LinkedList<Ray> rays = new LinkedList<>();
-	private static Vector vTo = new Vector(0, 0, -1);
-	private static Vector vUp = new Vector(0, 1, 0);
-	private static Camera camera = new Camera(Point3D.ZERO, vTo, vUp).setDistance(1).setViewPlaneSize(3, 3);
-
-//	Vector v[] = new Vector[] { new Vector(0, 0, -1), new Vector(1, 0, -1), new Vector(-1, 0, -1),
-//			new Vector(0, -1, -1), new Vector(0, 1, -1), new Vector(1, 1, -1), new Vector(1, -1, -1),
-//			new Vector(-1, 1, -1), new Vector(-1, -1, -1) };
+	public LinkedList<Ray> rays = new LinkedList<>();
+	public  IntegrationTests () {
+		 rays = new LinkedList<>();
+	}
+	private Vector vTo = new Vector(0, 0, -1);
+	private Vector vUp = new Vector(0, 1, 0);
+	private Camera camera = new Camera(Point3D.ZERO, vTo, vUp).setDistance(1).setViewPlaneSize(3, 3);
+	private Point3D p = new Point3D(0, 0, 0.5);
 
 	private void initRays() {
 		for (int i = 0; i < 3; ++i) {
@@ -56,7 +56,7 @@ public class IntegrationTests {
 		}
 		return sum;
 	}
-	
+
 	/**
 	 * test of Sphere
 	 */
@@ -71,7 +71,7 @@ public class IntegrationTests {
 
 		// TC02 Sphere is in front of the camera (18 points)
 		s = new Sphere(new Point3D(0, 0, -2.5), 2.5);
-		Point3D p = new Point3D(0, 0, 0.5);
+
 		camera = new Camera(p, vTo, vUp).setDistance(1).setViewPlaneSize(3, 3);
 		initRays();
 
@@ -100,6 +100,7 @@ public class IntegrationTests {
 	@Test
 	public void cameraPlaneIntersections() {
 		Plane plane = new Plane(new Point3D(1.5, 1.5, -3), new Point3D(1.5, -1.5, -3), new Point3D(-1.5, 1.5, -3));
+		initRays();
 
 		// TC01 The plane is in front of the camera and parallel to the view plane (9
 		// points)
@@ -123,6 +124,7 @@ public class IntegrationTests {
 	@Test
 	public void cameraTriangleIntersections() {
 		Triangle triangle = new Triangle(new Point3D(0, 1, -2), new Point3D(1, -1, -2), new Point3D(-1, -1, -2));
+		initRays();
 
 		// TC01 The triangle parallel to the view plane (1 point)
 		assertEquals("The triangle parallel to the view plane (1 point)", 1, sumOfIntersections(triangle, rays));
