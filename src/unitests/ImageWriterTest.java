@@ -11,8 +11,9 @@ import org.junit.Test;
 import renderer.ImageWriter;
 
 /**
- * @author josh5
- *
+ * test of Image Writer
+ * @authors Yehuda Shor 20761055 yehudashor789@gmail.com
+ * @authors Israel Cohen 203250170 josh50170@gmail.com
  */
 public class ImageWriterTest {
 	/**
@@ -21,6 +22,8 @@ public class ImageWriterTest {
 	 */
 	@Test
 	public void testWritePixel() {
+		// Create a basic image.
+		
 		ImageWriter imageWriter = new ImageWriter("ImageBasic", 500, 800);
 		int nx = imageWriter.getNx();
 		int ny = imageWriter.getNy();

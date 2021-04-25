@@ -29,7 +29,7 @@ import primitives.Vector;
 public class IntegrationTests {
 
 	public LinkedList<Ray> rays = new LinkedList<>();
-	public  IntegrationTests () {
+	public IntegrationTests () {
 		 rays = new LinkedList<>();
 	}
 	private Vector vTo = new Vector(0, 0, -1);

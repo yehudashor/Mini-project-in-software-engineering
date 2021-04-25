@@ -12,7 +12,6 @@ import scene.Scene;
  * 
  * @authors Yehuda Shor 20761055 yehudashor789@gmail.com
  * @authors Israel Cohen 203250170 josh50170@gmail.com
- *
  */
 public abstract class RayTracerBase {
 
@@ -30,9 +29,9 @@ public abstract class RayTracerBase {
 	}
 
 	/**
-	 * 
-	 * @param ray
-	 * @return
+	 * calculate the color of the Point that closest to the beginning of the ray and intersect aim.
+	 * @param ray : pass through the view plane.
+	 * @return final color in the point.
 	 */
 	public abstract Color traceRay(Ray ray);
 

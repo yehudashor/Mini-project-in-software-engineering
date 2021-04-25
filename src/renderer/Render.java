@@ -3,8 +3,6 @@
  */
 package renderer;
 
-import static org.junit.Assert.fail;
-
 import java.util.MissingResourceException;
 
 import elements.Camera;
@@ -81,6 +79,12 @@ public class Render {
 		return this;
 	}
 
+	/**
+	 * renderImage - paint the picture file.
+	 * 
+	 * @throws builder pattern - if one of that create the Image tougher fields is
+	 *                 null throw MissingResourceException.
+	 */
 	public void renderImage() {
 		if (imageWriter == null || scene == null || camera == null || rayTracer == null) {
 			throw new MissingResourceException("One or more from the parmetrs are null", null, null);
@@ -97,9 +101,10 @@ public class Render {
 	}
 
 	/**
-	 *
-	 * @param interval
-	 * @param color
+	 * print grid on the picture
+	 * 
+	 * @param interval : size of each square in the grid.
+	 * @param color    of the grid
 	 */
 	public void printGrid(int interval, Color color) {
 		int nX = imageWriter.getNx();
@@ -114,7 +119,7 @@ public class Render {
 	}
 
 	/**
-	 * 
+	 * create the picture file
 	 */
 	public void writeToImage() {
 
