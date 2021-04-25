@@ -91,11 +91,10 @@ public class Render {
 		}
 		int nX = imageWriter.getNx();
 		int nY = imageWriter.getNy();
-		Ray ray;
-		for (int i = 0; i < nX; ++i) {
-			for (int j = 0; j < nY; ++j) {
-				ray = camera.constructRayThroughPixel(nX, nY, i, j);
-				imageWriter.writePixel(i, j, rayTracer.traceRay(ray));
+		for (int i = 0; i < nY; i++) {
+			for (int j = 0; j < nX; ++j) {
+				Ray ray = camera.constructRayThroughPixel(nX, nY, j, i);
+				imageWriter.writePixel(j, i, rayTracer.traceRay(ray));
 			}
 		}
 	}
@@ -110,10 +109,10 @@ public class Render {
 		int nX = imageWriter.getNx();
 		int nY = imageWriter.getNy();
 		int gap = 1;
-		for (int i = 0; i < nX; i++) {
+		for (int i = 0; i < nY; i++) {
 			gap = i % interval == 0 ? 1 : interval;
-			for (int j = 0; j < nY; j += gap) {
-				imageWriter.writePixel(i, j, color);
+			for (int j = 0; j < nX; j += gap) {
+				imageWriter.writePixel(j, i, color);
 			}
 		}
 	}

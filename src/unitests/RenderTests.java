@@ -14,7 +14,7 @@ import scene.Scene;
  * @author Dan
  */
 public class RenderTests {
-	private Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, -1, 0)) //
+	private Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 			.setDistance(100) //
 			.setViewPlaneSize(500, 500);
 
@@ -35,7 +35,7 @@ public class RenderTests {
 				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)), // down left
 				new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100))); // down right
 
-		ImageWriter imageWriter = new ImageWriter("base render test", 1000, 1000);
+		ImageWriter imageWriter = new ImageWriter("base render test", 500, 500);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setScene(scene) //
@@ -46,7 +46,4 @@ public class RenderTests {
 		render.printGrid(100, new Color(java.awt.Color.YELLOW));
 		render.writeToImage();
 	}
-	
-
-	
 }

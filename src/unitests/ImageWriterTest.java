@@ -3,9 +3,7 @@
  */
 package unitests;
 
-import static org.junit.Assert.*;
-
-import java.awt.Color;
+import static primitives.Color.*;
 
 import org.junit.Test;
 import renderer.ImageWriter;
@@ -24,15 +22,15 @@ public class ImageWriterTest {
 	public void testWritePixel() {
 		// Create a basic image.
 		
-		ImageWriter imageWriter = new ImageWriter("ImageBasic", 500, 800);
+		ImageWriter imageWriter = new ImageWriter("ImageBasic", 800, 500);
 		int nx = imageWriter.getNx();
 		int ny = imageWriter.getNy();
-		for (int i = 0; i < nx; i++) {
-			for (int j = 0; j < ny; j++) {
+		for (int i = 0; i < ny; i++) {
+			for (int j = 0; j < nx; j++) {
 				if (i % 50 == 0 || j % 50 == 0) {
-					imageWriter.writePixel(i, j, primitives.Color.GREEN);
+					imageWriter.writePixel(j, i, GREEN);
 				} else {
-					imageWriter.writePixel(i, j, primitives.Color.RED);
+					imageWriter.writePixel(j, i, RED);
 				}
 			}
 		}
