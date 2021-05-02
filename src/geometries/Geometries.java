@@ -41,24 +41,25 @@ public class Geometries implements Intersectable {
 
 	/**
 	 * add shapes
+	 * 
 	 * @param geometries : shapes to add
 	 */
 	public void add(Intersectable... geometries) {
 		intersectable.addAll(List.of(geometries));
 	}
-	
+
 	@Override
-	public List<Point3D> findIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
 		if (intersectable.size() == 0)
 			return null;
-		
-		List<Point3D> points = null;
-		
+
+		List<GeoPoint> points = null;
+
 		for (Intersectable it : intersectable) {
-			var points1 = it.findIntersections(ray);
+			var points1 = it.findGeoIntersections(ray);
 			if (points1 != null) {
 				if (points == null)
-					points = new LinkedList<Point3D>();
+					points = new LinkedList<GeoPoint>();
 				points.addAll(points1);
 			}
 		}

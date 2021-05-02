@@ -23,8 +23,12 @@ public class Triangle extends Polygon {
 	}
 
 	@Override
-	public List<Point3D> findIntersections(Ray ray) {
-		List<Point3D> intersection = plane.findIntersections(ray);
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
+		List<GeoPoint> intersection = plane.findGeoIntersections(ray);
+
+		for (GeoPoint geoPoint : intersection) {
+			geoPoint.geometry = this;
+		}
 		if (intersection != null) {
 			Point3D p0 = ray.getP0();
 			Vector v = ray.getDir();

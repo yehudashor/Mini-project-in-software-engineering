@@ -10,7 +10,7 @@ import primitives.*;
  * @authors Yehuda Shor 20761055 yehudashor789@gmail.com
  * @authors Israel Cohen 203250170 josh50170@gmail.com
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
 	/**
 	 * point in the plane
 	 */
@@ -76,7 +76,7 @@ public class Plane implements Geometry {
 	}
 
 	@Override
-	public List<Point3D> findIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
 		double numerator;
 		try {
 			numerator = normal.dotProduct(q0.subtract(ray.getP0()));
@@ -89,7 +89,7 @@ public class Plane implements Geometry {
 
 		double dis = Util.alignZero(numerator / denumerator);
 
-		return dis <= 0 ? null : List.of(ray.getPoint(dis));
+		return dis <= 0 ? null : List.of(new GeoPoint(this, ray.getPoint(dis)));
 	}
 
 }
