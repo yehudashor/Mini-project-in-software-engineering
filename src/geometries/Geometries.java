@@ -52,7 +52,7 @@ public class Geometries implements Intersectable {
 	public List<GeoPoint> findGeoIntersections(Ray ray) {
 		if (intersectable.size() == 0)
 			return null;
-
+		
 		List<GeoPoint> points = null;
 
 		for (Intersectable it : intersectable) {
