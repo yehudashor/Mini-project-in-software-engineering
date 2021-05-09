@@ -28,15 +28,26 @@ import primitives.Vector;
  */
 public class IntegrationTests {
 
+	/**
+	 * rays from camera
+	 */
 	public LinkedList<Ray> rays = new LinkedList<>();
-	public IntegrationTests () {
-		 rays = new LinkedList<>();
+
+	/**
+	 * constructor
+	 */
+	public IntegrationTests() {
+		rays = new LinkedList<>();
 	}
+
 	private Vector vTo = new Vector(0, 0, -1);
 	private Vector vUp = new Vector(0, 1, 0);
 	private Camera camera = new Camera(Point3D.ZERO, vTo, vUp).setDistance(1).setViewPlaneSize(3, 3);
 	private Point3D p = new Point3D(0, 0, 0.5);
 
+	/**
+	 * build rays from camera through the view plane
+	 */
 	private void initRays() {
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 3; ++j) {
@@ -45,6 +56,13 @@ public class IntegrationTests {
 		}
 	}
 
+	/**
+	 * calculate sum of intersections between the rays and shape
+	 * 
+	 * @param i    shape
+	 * @param rays rays from camera through the view plane
+	 * @return sum of intersections between the rays and shape
+	 */
 	private int sumOfIntersections(Intersectable i, LinkedList<Ray> rays) {
 		int sum = 0;
 

@@ -31,7 +31,12 @@ public abstract class Geometry implements Intersectable {
 	public Color getEmission() {
 		return emission;
 	}
-
+	
+	/**
+	 * material
+	 */
+	private Material material = new Material();
+	
 	/**
 	 * set
 	 * @param emmission
@@ -41,4 +46,24 @@ public abstract class Geometry implements Intersectable {
 		this.emission = emmission;
 		return this;
 	}
+
+	/**
+	 * get material
+	 * @return the material
+	 */
+	public Material getMaterial() {
+		return material;
+	}
+
+	/**
+	 * set material
+	 * @param material the material to set
+	 * @return this
+	 */
+	public Geometry setMaterial(Material material) {
+		this.material = material;
+		return this;
+	}
+	
+	
 }

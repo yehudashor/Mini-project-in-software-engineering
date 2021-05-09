@@ -6,18 +6,13 @@ package elements;
 import primitives.Color;
 
 /**
- * represent Ambient Light
+ * represent Ambient Light extends from Light class
  * 
  * @authors Yehuda Shor 20761055 yehudashor789@gmail.com
  * @authors Israel Cohen 203250170 josh50170@gmail.com
  *
  */
-public class AmbientLight {
-	
-	/**
-	 * intensity of the color from Ambient Light.
-	 */
-	private Color intensity;
+public class AmbientLight extends Light {
 
 	/**
 	 * Ambient Light
@@ -25,15 +20,6 @@ public class AmbientLight {
 	 * @param kA
 	 */
 	public AmbientLight(Color iA, double kA) {
-		intensity = iA.scale(kA);
-	}
-
-	/**
-	 * get intensity
-	 * @return the intensity
-	 */
-	public Color getIntensity() {
-		
-		return intensity;
+		super(iA.scale(kA));
 	} 
 }

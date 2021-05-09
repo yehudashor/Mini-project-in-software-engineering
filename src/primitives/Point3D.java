@@ -60,7 +60,7 @@ public class Point3D {
 	 * subtract a point from vector
 	 * 
 	 * @param point to subtract
-	 * @return new vector
+	 * @return new vector, this - point
 	 */
 	public Vector subtract(Point3D point) {
 		return new Vector(this.x.coord - point.x.coord, this.y.coord - point.y.coord, this.z.coord - point.z.coord);
