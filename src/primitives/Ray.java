@@ -1,8 +1,9 @@
 package primitives;
 
 import java.util.List;
-import geometries.Intersectable.GeoPoint; 
+import java.util.stream.Collectors;
 
+import geometries.Intersectable.GeoPoint;
 
 /**
  * Ray class represents a ray
@@ -76,41 +77,41 @@ public class Ray {
 
 	/**
 	 * Find the Closest Point to the beginning of the ray
+	 * 
 	 * @param points List of points on the Ray
 	 * @return the closest point to the beginning of the ray
 	 */
 	public Point3D findClosestPoint(List<Point3D> points) {
-		if (points.size() != 0) {
-			Point3D closest = points.get(0);
-			int size = points.size();
-			for(int i = 1; i < size; ++i) {
-				Point3D p = points.get(i);
-				if(this.p0.distance(closest) > this.p0.distance(p))
-					closest = p;
-			}
-			return closest;
-		}
-		return null;
+		if (points == null)
+			return null;
+
+		return getClosestGeoPoint(points //
+				.stream() //
+				.map(p -> new GeoPoint(null, p)) //
+				.collect(Collectors.toList())).point;
 	}
-	
+
 	/**
 	 * Find the Closest Point to the beginning of the ray
+	 * 
 	 * @param points List of points on the Ray
 	 * @return the closest point to the beginning of the ray
 	 */
 	public GeoPoint getClosestGeoPoint(List<GeoPoint> points) {
-		if (points.size() != 0) {
-			GeoPoint closest = points.get(0);
-			int size = points.size();
-			for(int i = 1; i < size; ++i) {
-				GeoPoint p = points.get(i);
-				if(this.p0.distance(closest.point) > this.p0.distance(p.point))
-					closest = p;
+		if (points == null)
+			return null;
+
+		GeoPoint closest = null;
+		double minDistance = Double.POSITIVE_INFINITY;
+		for (var p : points) {
+			double d = p0.distance(p.point);
+			if (minDistance > d) {
+				closest = p;
+				minDistance = d;
 			}
-			return closest;
 		}
-		return null;
+
+		return closest;
 	}
-	
-	
+
 }

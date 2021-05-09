@@ -39,7 +39,7 @@ public class SpotLight extends PointLight {
 	@Override
 	public Color getIntensity(Point3D p) {
 		double d = direction.dotProduct(getL(p));
-		return alignZero(d) > 0 ? super.getIntensity().scale(d) : Color.BLACK;
+		return alignZero(d) > 0 ? super.getIntensity(p).scale(d) : Color.BLACK;
 	}
 
 }

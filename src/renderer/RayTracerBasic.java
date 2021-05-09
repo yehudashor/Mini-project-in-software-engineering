@@ -46,7 +46,7 @@ public class RayTracerBasic extends RayTracerBase {
 	 * help function that calculate the color of the Point
 	 * 
 	 * @param closestPoint closest Point
-	 * @param ray ray direction of the camera
+	 * @param ray          ray direction of the camera
 	 * @return final color in the point
 	 */
 	private Color calcColor(GeoPoint closestPoint, Ray ray) {
@@ -56,8 +56,9 @@ public class RayTracerBasic extends RayTracerBase {
 
 	/**
 	 * calculate the color reflect from the point by Fong's model
+	 * 
 	 * @param intersection the point
-	 * @param ray ray direction of the camera
+	 * @param ray          ray direction of the camera
 	 * @return the color reflect from the point
 	 */
 	private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
@@ -92,29 +93,31 @@ public class RayTracerBasic extends RayTracerBase {
 	 * @param l
 	 * @param n
 	 * @param v
-	 * @param nShininess 
+	 * @param nShininess
 	 * @param lightIntensity light's intensity originally
 	 * @return intensity of light with the specular
 	 */
 	private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
-		Vector r = l.add(n.scale(-2*l.dotProduct(n)));
-		double t = alignZero(Math.pow(r.dotProduct(v.scale(-1)), nShininess));		
-		return t > 0 ? lightIntensity.scale(ks * t) : Color.BLACK;
+		Vector r = l.add(n.scale(-2 * l.dotProduct(n)));
+		double t = alignZero(-r.dotProduct(v));
+		return t > 0 ? lightIntensity.scale(ks * Math.pow(t, nShininess)) : Color.BLACK;
 	}
 
 	/**
 	 * help function for fong's model calculate the diffuse of light
 	 * 
 	 * @param kd
-	 * @param l 
-	 * @param n 
+	 * @param l
+	 * @param n
 	 * @param lightIntensity light's intensity originally
 	 * @return intensity of light after the diffusion
 	 */
 	private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
 		double s = l.dotProduct(n);
+		if (s < 0)
+			s = -s;
 		// ensure the absolute value of l.dotProduct(n) in scalar
-		return lightIntensity.scale(kd*Math.abs(s));
+		return lightIntensity.scale(kd * s);
 	}
 
 }

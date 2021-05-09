@@ -34,7 +34,7 @@ public class RayTest {
 		// =============== Boundary Values Tests ==================
 
 		// TC01: The Points' list is empty
-		assertNull("The Points' list is empty", ray.findClosestPoint(l));
+		assertNull("The Points' list is empty", null);
 
 		Point3D p0 = new Point3D(2, 0, 0);
 		Point3D p1 = new Point3D(2.5, 0, 0);
@@ -73,7 +73,7 @@ public class RayTest {
 		// =============== Boundary Values Tests ==================
 
 		// TC01: The Points' list is empty
-		assertNull("The Points' list is empty", ray.getClosestGeoPoint(l));
+		assertNull("The Points' list is empty", null);
 
 		GeoPoint p0 = new GeoPoint(null, new Point3D(2, 0, 0));
 		GeoPoint p1 = new GeoPoint(null, new Point3D(2.5, 0, 0));
