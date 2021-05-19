@@ -25,11 +25,6 @@ public class Render {
 	private ImageWriter imageWriter;
 
 	/**
-	 * scene
-	 */
-	private Scene scene;
-
-	/**
 	 * camera
 	 */
 	private Camera camera;
@@ -46,16 +41,6 @@ public class Render {
 	 */
 	public Render setImageWriter(ImageWriter imageWriter) {
 		this.imageWriter = imageWriter;
-		return this;
-	}
-
-	/**
-	 * set
-	 * 
-	 * @param scene the scene to set
-	 */
-	public Render setScene(Scene scene) {
-		this.scene = scene;
 		return this;
 	}
 
@@ -86,7 +71,7 @@ public class Render {
 	 *                 null throw MissingResourceException.
 	 */
 	public void renderImage() {
-		if (imageWriter == null || scene == null || camera == null || rayTracer == null) {
+		if (imageWriter == null || camera == null || rayTracer == null) {
 			throw new MissingResourceException("One or more from the parmetrs are null", null, null);
 		}
 		int nX = imageWriter.getNx();

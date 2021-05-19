@@ -27,5 +27,12 @@ public interface LightSource {
 	 * @return the direction Vector of the light source
 	 */
 	public Vector getL(Point3D p);
+	
+	/**
+	 * Compute the distance between ray's beginning and light source
+	 * @param point - start of the ray
+	 * @return distance between ray's beginning and light source
+	 */
+	public double getDistance(Point3D point);
 
 }

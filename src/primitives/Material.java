@@ -10,11 +10,10 @@ package primitives;
  * @authors Israel Cohen 203250170 josh50170@gmail.com
  */
 public class Material {
-
 	/**
-	 * kD, kS
+	 * kD, kS, kT, kR
 	 */
-	public double kD = 0, kS = 0;
+	public double kD = 0.0, kS = 0.0, kT = 0.0, kR = 0.0;
 
 	/**
 	 * enShinines
@@ -22,7 +21,25 @@ public class Material {
 	public int enShininess = 0;
 
 	/**
+	 * @param kT the kT to set
+	 */
+	public Material setkT(double kT) {
+		this.kT = kT;
+		return this;
+	}
+
+
+	/**
+	 * @param kR the kR to set
+	 */
+	public Material setkR(double kR) {
+		this.kR = kR;
+		return this;
+	}
+
+	/**
 	 * set kD
+	 * 
 	 * @param kD the kD to set
 	 * @return this
 	 */
@@ -33,6 +50,7 @@ public class Material {
 
 	/**
 	 * set kS
+	 * 
 	 * @param kS the kS to set
 	 * @return this
 	 */
@@ -43,6 +61,7 @@ public class Material {
 
 	/**
 	 * set enShinines
+	 * 
 	 * @param enShinines the enShinines to set
 	 * @return this
 	 */
@@ -51,5 +70,4 @@ public class Material {
 		return this;
 	}
 
-	
 }
