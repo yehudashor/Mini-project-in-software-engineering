@@ -176,17 +176,17 @@ public class RayTracerBasic extends RayTracerBase {
 		}
 		return color;
 	}
-
+	
 	/**
-	 * help function for fong's model calculate the specular of light
+	 * help function for fong's model calculate the secular of light
 	 * 
-	 * @param ks
-	 * @param l
-	 * @param n
-	 * @param v
+	 * @param ks  secular component chef
+	 * @param l   direction from light to point
+	 * @param n   normal to surface at the point
+	 * @param v    direction from point of view to point
 	 * @param nShininess
 	 * @param lightIntensity light's intensity originally
-	 * @return intensity of light with the specular
+	 * @return intensity of light with the secular
 	 */
 	private Color calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess, Color lightIntensity) {
 		Vector r = l.add(n.scale(-2 * l.dotProduct(n)));
@@ -197,9 +197,9 @@ public class RayTracerBasic extends RayTracerBase {
 	/**
 	 * help function for fong's model calculate the diffuse of light
 	 * 
-	 * @param kd
-	 * @param l
-	 * @param n
+	 * @param kd  diffusive component chef
+	 * @param l   direction from light to point
+	 * @param n   normal to surface at the point
 	 * @param lightIntensity light's intensity originally
 	 * @return intensity of light after the diffusion
 	 */
