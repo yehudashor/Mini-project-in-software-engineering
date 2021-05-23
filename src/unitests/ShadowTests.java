@@ -72,4 +72,103 @@ public class ShadowTests {
 		render.writeToImage();
 	}
 
+	///more test function we added:///
+		/**
+		 * Sphere-Triangle shading - move triangle up-right
+		 */
+		@Test
+		public void SphereTriangleMove1() {
+			scene.geometries.add( //
+					new Sphere(new Point3D(0, 0, -200), 60) //
+					.setEmission(new Color(java.awt.Color.BLUE)) //
+					.setMaterial(new Material().setKd(0.5).setKs(0.5).setEnShininess(30)), //
+					new Triangle(new Point3D(-60, -30, 0), new Point3D(-30, -60, 0), new Point3D(-58, -58, -4)) //
+					.setEmission(new Color(java.awt.Color.BLUE)) //
+					.setMaterial(new Material().setKd(0.5).setKs(0.5).setEnShininess(30)) // 
+					);
+			scene.lights.add( //
+					new SpotLight(new Color(400, 240, 0), new Point3D(-100, -100, 200), new Vector(1, 1, -3)) //
+					.setkL(1E-5).setkQ(1.5E-7)); 
+			Render render = new Render(). //
+					setImageWriter(new ImageWriter("shadowSphereTriangleMove1", 400, 400)) //
+					.setCamera(camera) // 
+					.setRayTracer(new RayTracerBasic(scene));
+			render.renderImage(); 
+			render.writeToImage(); 
+
+		}
+
+		/**
+		 * Sphere-Triangle shading - move triangle upper-righter
+		 */
+		@Test
+		public void SphereTriangleMove2() {
+			scene.geometries.add( //
+					new Sphere(new Point3D(0, 0, -200), 60) //
+					.setEmission(new Color(java.awt.Color.BLUE)) //
+					.setMaterial(new Material().setKd(0.5).setKs(0.5).setEnShininess(30)), // 
+					new Triangle(new Point3D(-50, -20, 0), new Point3D(-20, -50, 0), new Point3D(-48, -48, -4)) 
+					.setEmission(new Color(java.awt.Color.BLUE)) // 
+					.setMaterial(new Material().setKd(0.5).setKs(0.5).setEnShininess(30))); // 
+			scene.lights.add( //
+					new SpotLight(new Color(400, 240, 0), new Point3D(-100, -100, 200), new Vector(1, 1, -3)) //
+					.setkL(1E-5).setkQ(1.5E-7)); 
+			Render render = new Render(). // 
+					setImageWriter(new ImageWriter("shadowSphereTriangleMove2", 400, 400)) //
+					.setCamera(camera) //
+					.setRayTracer(new RayTracerBasic(scene));
+			render.renderImage(); 
+			render.writeToImage(); 
+
+		}
+
+		/**
+		 * Sphere-Triangle shading - move spot closer
+		 */
+		@Test
+		public void SphereTriangleSpot1() {
+
+			scene.geometries.add( //
+					new Sphere(new Point3D(0, 0, -200), 60) //
+					.setEmission(new Color(java.awt.Color.BLUE)) //
+					.setMaterial(new Material().setKd(0.5).setKs(0.5).setEnShininess(30)), //
+					new Triangle(new Point3D(-70, -40, 0), new Point3D(-40, -70, 0), new Point3D(-68, -68, -4))
+					.setEmission(new Color(java.awt.Color.BLUE)) //
+					.setMaterial(new Material().setKd(0.5).setKs(0.5).setEnShininess(30)) // 
+					); 
+			scene.lights.add( //
+					new SpotLight(new Color(500, 300, 0), new Point3D(-85, -85, 125), new Vector(1, 1, -3)) //
+					.setkL(1E-5).setkQ(1.5E-7)); 
+			Render render = new Render(). //
+					setImageWriter(new ImageWriter("shaLwSphereTriangleSpot1", 400, 400)) //
+					.setCamera(camera) // 
+					.setRayTracer(new RayTracerBasic(scene));
+			render.renderImage(); 
+			render.writeToImage(); 
+		}	
+
+		/**
+		 * Sphere-Triangle shading - move spot even more close
+		 */
+		@Test
+		public void SphereTriangleSpot2() {
+			scene.geometries.add( //
+					new Sphere(new Point3D(0, 0, -200), 60) //
+					.setEmission(new Color(java.awt.Color.BLUE)) //
+					.setMaterial(new Material().setKd(0.5).setKs(0.5).setEnShininess(30)), //
+					new Triangle(new Point3D(-70, -40, 0), new Point3D(-40, -70, 0), new Point3D(-68, -68, -4)) //
+					.setEmission(new Color(java.awt.Color.BLUE)) //
+					.setMaterial(new Material().setKd(0.5).setKs(0.5).setEnShininess(30)) // 
+					); scene.lights.add( //
+							new SpotLight(new Color(400, 240, 0), new Point3D(-70, -70, 60), new Vector(1, 1, -3)) //
+							.setkL(1E-5).setkQ(1.5E-7)); 
+					Render render = new Render(). //
+							setImageWriter(new ImageWriter("shadowSphereTriangleSpot2", 400, 400)) // 
+							.setCamera(camera) //
+							.setRayTracer(new RayTracerBasic(scene));
+					render.renderImage();
+					render.writeToImage(); 
+
+		}	
+
 }

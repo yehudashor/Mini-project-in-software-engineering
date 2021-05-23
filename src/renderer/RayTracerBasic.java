@@ -32,6 +32,11 @@ public class RayTracerBasic extends RayTracerBase {
 	private static final double MIN_CALC_COLOR_K = 0.001;
 
 	/**
+	 * INITIAL_K
+	 */
+	private static final double INITIAL_K = 1.0;
+
+	/**
 	 * constructor
 	 * 
 	 * @param scene
@@ -42,11 +47,10 @@ public class RayTracerBasic extends RayTracerBase {
 
 	@Override
 	public Color traceRay(Ray ray) {
-		List<GeoPoint> intersections = scene.geometries.findGeoIntersections(ray);
-		if (intersections == null) {
+		GeoPoint closestPoint = findClosestIntersection(ray);
+		if (closestPoint == null) {
 			return scene.background;
 		}
-		GeoPoint closestPoint = ray.getClosestGeoPoint(intersections);
 		return calcColor(closestPoint, ray);
 	}
 
@@ -58,57 +62,59 @@ public class RayTracerBasic extends RayTracerBase {
 	 * @return final color in the point
 	 */
 	private Color calcColor(GeoPoint closestPoint, Ray ray) {
-		return calcColor(closestPoint, ray, MAX_CALC_COLOR_LEVEL, MIN_CALC_COLOR_K)
-				.add(scene.ambientLight.getIntensity());
+		return calcColor(closestPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K).add(scene.ambientLight.getIntensity());
 	}
 
 	/**
-     * calculate the color of a point in the scene
-     *
-     * @param geopoint the point which we calculate the color from
-     * @param Ray    the ray to the given point
-     * @param level    the number of recursion levels
-     * @param k        double num that if it is smaller than MIN_CALC_COLOR_K we will return BLACK
-     * @return the color of the requested point
-     */
+	 * calculate the color of a point in the scene
+	 *
+	 * @param geopoint the point which we calculate the color from
+	 * @param Ray      the ray to the given point
+	 * @param level    the number of recursion levels
+	 * @param k        double number that if it is smaller than MIN_CALC_COLOR_K we
+	 *                 will return BLACK
+	 * @return the color of the requested point
+	 */
 	private Color calcColor(GeoPoint intersection, Ray ray, int level, double k) {
+		if (intersection == null)
+			return Color.BLACK;
+
 		Color color = intersection.geometry.getEmission();
-		color = color.add(calcLocalEffects(intersection, ray, k));
+		color = color.add(calcLocalEffects(intersection, ray, level, k));
 		return 1 == level ? color : color.add(calcGlobalEffects(intersection, ray, level, k));
 	}
 
 	/**
-     * calculate the reflection and transparency
-     *
-     * @param geopoint the point which we calculate the color from
-     * @param Ray    the ray to the given point
-     * @param level    the number of recursion levels
-     * @param k        double num that if it is smaller than MIN_CALC_COLOR_K we will return BLACK
-     * @return 
-     */
+	 * calculate the reflection and transparency
+	 *
+	 * @param geopoint the point which we calculate the color from
+	 * @param Ray      the ray to the given point
+	 * @param level    the number of recursion levels
+	 * @param k        double number that if it is smaller than MIN_CALC_COLOR_K we
+	 *                 will return BLACK
+	 * @return
+	 */
 	private Color calcGlobalEffects(GeoPoint geopoint, Ray inRay, int level, double k) {
 		Color color = Color.BLACK;
 		Material material = geopoint.geometry.getMaterial();
-		double kr = material.kR, kkr = k * kr;
 		Vector n = geopoint.geometry.getNormal(geopoint.point);
+
 		if (level == 1 || k < MIN_CALC_COLOR_K) {
-            return color;
-        }
+			return color;
+		}
+
+		double kr = material.kR, kkr = k * kr;
 		if (kkr > MIN_CALC_COLOR_K) {
 			Ray reflectedRay = constructReflectedRay(n, geopoint.point, inRay);
 
 			GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
-			if(reflectedPoint != null) {
-				color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));	
-			}
+			color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
 		}
 		double kt = material.kT, kkt = k * kt;
 		if (kkt > MIN_CALC_COLOR_K) {
 			Ray refractedRay = constructRefractedRay(n, geopoint.point, inRay);
 			GeoPoint refractedPoint = findClosestIntersection(refractedRay);
-			if(refractedPoint != null) {
 			color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(kt));
-			}
 		}
 		return color;
 	}
@@ -116,7 +122,7 @@ public class RayTracerBasic extends RayTracerBase {
 	/**
 	 * construct Reflected Ray
 	 * 
-	 * @param n - normal at the point
+	 * @param n     - normal at the point
 	 * @param point - point
 	 * @param inRay - ray
 	 * @return Reflected Ray
@@ -133,7 +139,7 @@ public class RayTracerBasic extends RayTracerBase {
 	/**
 	 * construct Refracted Ray
 	 * 
-	 * @param n - normal at the point 
+	 * @param n     - normal at the point
 	 * @param point - point
 	 * @param inRay - ray
 	 * @return Refracted Ray
@@ -159,7 +165,7 @@ public class RayTracerBasic extends RayTracerBase {
 	 * @param ray          ray direction of the camera
 	 * @return the color reflect from the point
 	 */
-	private Color calcLocalEffects(GeoPoint intersection, Ray ray, double k) {
+	private Color calcLocalEffects(GeoPoint intersection, Ray ray, int level, double k) {
 		Vector v = ray.getDir();
 		Vector n = intersection.geometry.getNormal(intersection.point);
 		double nv = alignZero(n.dotProduct(v));
@@ -189,11 +195,11 @@ public class RayTracerBasic extends RayTracerBase {
 	/**
 	 * help function for fong's model calculate the specular of light
 	 * 
-	 * @param ks  secular component chef
-	 * @param l   direction from light to point
-	 * @param n   normal to surface at the point
-	 * @param v    direction from point of view to point
-	 * @param nShininess 
+	 * @param ks             secular component chef
+	 * @param l              direction from light to point
+	 * @param n              normal to surface at the point
+	 * @param v              direction from point of view to point
+	 * @param nShininess
 	 * @param lightIntensity light's intensity originally
 	 * @param lightIntensity light's intensity originally
 	 * @return intensity of light with the specular
@@ -207,9 +213,9 @@ public class RayTracerBasic extends RayTracerBase {
 	/**
 	 * help function for fong's model calculate the diffuse of light
 	 * 
-	 * @param kd  diffusive component chef
-	 * @param l   direction from light to point
-	 * @param n   normal to surface at the point
+	 * @param kd             diffusive component chef
+	 * @param l              direction from light to point
+	 * @param n              normal to surface at the point
 	 * @param lightIntensity light's intensity originally
 	 * @return intensity of light after the diffusion
 	 */
@@ -220,7 +226,6 @@ public class RayTracerBasic extends RayTracerBase {
 		// ensure the absolute value of l.dotProduct(n) in scalar
 		return lightIntensity.scale(kd * s);
 	}
-	
 
 	/**
 	 * checks if the point is unshaded
