@@ -11,16 +11,32 @@ package primitives;
  */
 public class Material {
 	/**
-	 * kD, kS, kT, kR
+	 * kD - diffusive factor 
 	 */
-	public double kD = 0.0, kS = 0.0, kT = 0.0, kR = 0.0;
+	public double kD = 0.0;
+	
+	/**
+	 * kS - specular factor 
+	 */
+	public double kS = 0.0;
+	
+	/**
+	 * kT - transparency factor
+	 */
+	public double kT = 0.0;
 
 	/**
-	 * enShinines
+	 * kR - reflection factor
+	 */
+	public double kR  = 0.0;
+	
+	/**
+	 * enShinines - enShinines
 	 */
 	public int enShininess = 0;
 
 	/**
+	 * set kR
 	 * @param kT the kT to set
 	 */
 	public Material setkT(double kT) {
@@ -30,6 +46,7 @@ public class Material {
 
 
 	/**
+	 * set kR
 	 * @param kR the kR to set
 	 */
 	public Material setkR(double kR) {
