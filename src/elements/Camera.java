@@ -1,5 +1,8 @@
 package elements;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Util;
@@ -96,6 +99,15 @@ public class Camera {
 	}
 
 	/**
+	 * height getter
+	 * 
+	 * @return height
+	 */
+	public double getHeight() {
+		return height;
+	}
+
+	/**
 	 * Set of width & height of the View Plane
 	 * 
 	 * @param width  : width of the View plane
@@ -130,10 +142,11 @@ public class Camera {
 	 * @return : Ray starts in camera and intersect the view plane at the center of
 	 *         the pixel
 	 */
-	public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
+	public Ray constructRayThroughPixel(int nX, int nY, int j, int i, double... wh) {
 		Point3D pCenter = p0.add(vTo.scale(distance));
-		double pixelHeight = height / nY;
-		double pixelWidth = width / nX;
+		 
+		double pixelHeight = wh.length > 0 ? wh[0] : height / nY;
+		double pixelWidth =  wh.length > 0 ? wh[0] : width / nX;
 		double heighFromPc = -((i - (nY - 1) / 2d) * pixelHeight);
 		double widthFromPc = (j - (nX - 1) / 2d) * pixelWidth;
 		Point3D pIJ = pCenter;
@@ -144,6 +157,32 @@ public class Camera {
 		if (widthFromPc != 0) {
 			pIJ = pIJ.add(vRight.scale(widthFromPc));
 		}
-			return new Ray(p0, pIJ.subtract(p0));
+		return new Ray(p0, pIJ.subtract(p0));
+		// return List.of(new Ray(p0, pIJ.subtract(p0)), new Ray(pIJ,
+		// pIJ.subtract(p0)));
+
+//		List<Ray> rays = new LinkedList<>();
+//		rays.add(new Ray(p0, pIJ.subtract(p0)));
+//		int size = 8;
+//		double radius = pixelHeight / 2d;
+//		double radius1 = pixelWidth / 2d;
+//		Point3D start = pIJ.add(vUp.scale(radius));
+//		start = start.add(vRight.scale(radius1));
+//		double h = pixelHeight / size;
+//		double w = pixelWidth / size;
+//		for (double row = h; row < size; row += h) {
+//			Point3D p = start.add(vUp.scale(row));
+//			for (double colmun = w; colmun < size; colmun += w) {
+//				Point3D p1 = p.add(vRight.scale(colmun));
+//				double d = p1.distance(pIJ);
+//				if (d < radius) {
+//					rays.add(new Ray(p0, p1.subtract(p0)));
+//				}
+//			}
+//		}
+//
+//		return rays;
 	}
+	
+	
 }

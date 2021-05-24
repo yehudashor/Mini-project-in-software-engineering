@@ -45,7 +45,7 @@ public class Ray {
 	 * @param normal - normal vector to surface  
 	 */
 	public Ray(Point3D point, Vector direction, Vector normal) { 	
-		dir = direction.normalized();
+		dir = direction;
 		double nV = normal.dotProduct(direction);
 		Vector delta = normal.scale(nV >= 0 ? DELTA : -DELTA);
 		p0 = point.add(delta);

@@ -28,21 +28,21 @@ public class RayTracerBasic extends RayTracerBase {
 	 * MIN_CALC_COLOR_K - Minimum color intensity for transparency and reflection
 	 */
 	private static final double MIN_CALC_COLOR_K = 0.001;
-	
+
 	/**
-	 * INITIAL_K  - 
+	 * INITIAL_K -
 	 */
 	private static final double INITIAL_K = 1.0;
 
 	/**
 	 * constructor
 	 * 
-	 * @param scene - scene 
+	 * @param scene - scene
 	 */
 	public RayTracerBasic(Scene scene) {
 		super(scene);
 	}
-	
+
 	@Override
 	public Color traceRay(Ray ray) {
 		GeoPoint closestPoint = findClosestIntersection(ray);
@@ -51,14 +51,15 @@ public class RayTracerBasic extends RayTracerBase {
 		}
 		return calcColor(closestPoint, ray);
 	}
-	
+
 	/**
 	 * help function that calculate the color of the Point.
+	 * 
 	 * @param closestPoint closest Point.
-	 * @param ray ray direction of the camera.
+	 * @param ray          ray direction of the camera.
 	 * @return final color in the point.
 	 */
-	private Color calcColor(GeoPoint closestPoint, Ray ray){
+	private Color calcColor(GeoPoint closestPoint, Ray ray) {
 		return calcColor(closestPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K).add(scene.ambientLight.getIntensity());
 	}
 
@@ -90,7 +91,7 @@ public class RayTracerBasic extends RayTracerBase {
 		Color color = Color.BLACK;
 		Material material = geopoint.geometry.getMaterial();
 		Vector n = geopoint.geometry.getNormal(geopoint.point);
-		
+
 		double kr = material.kR, kkr = k * kr;
 		if (kkr > MIN_CALC_COLOR_K) {
 			Ray reflectedRay = constructReflectedRay(n, geopoint.point, inRay);
