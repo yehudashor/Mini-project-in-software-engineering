@@ -152,45 +152,6 @@ public class Camera {
 	 * @return : beam rays as a list.
 	 */
 	public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i, int size) {
-		// Point3D pCenter = p0.add(vTo.scale(distance));
-
-//		double pixelHeight = height / nY;
-//		double pixelWidth = width / nX;
-//		double heighFromPc = -((i - (nY - 1) / 2d) * pixelHeight);
-//		double widthFromPc = (j - (nX - 1) / 2d) * pixelWidth;
-//		Point3D pIJ = pCenter;
-//		
-//		if (heighFromPc != 0) {
-//			pIJ = pIJ.add(vUp.scale(heighFromPc));
-//		}
-//		if (widthFromPc != 0) {
-//			pIJ = pIJ.add(vRight.scale(widthFromPc));
-//		}
-//		Ray ray = new Ray(p0, pIJ.subtract(p0));
-//
-//		int size = 17;
-//		List<Ray> rays = new LinkedList<Ray>();
-//		rays.add(ray);
-//		pixelHeight = height / nY / size;
-//		pixelWidth = width / nX / size;
-//		Point3D p = pIJ;
-//		for (int row = 0; row < size; row++) {
-//			for (int colmun = 0; colmun < size; colmun++) {
-//
-//				heighFromPc = -((row - (size - 1) / 2d) * pixelHeight);
-//				widthFromPc = (colmun - (size - 1) / 2d) * pixelWidth;
-//				if (heighFromPc != 0) {
-//					pIJ = pIJ.add(vUp.scale(heighFromPc));
-//				}
-//				if (widthFromPc != 0) {
-//					pIJ = pIJ.add(vRight.scale(widthFromPc));
-//				}
-//				rays.add(new Ray(p0, pIJ.subtract(p0)));
-//				pIJ = p;
-//			}
-//		}
-//
-//		return rays;
 		Point3D pCenter = p0.add(vTo.scale(distance));
 		Point3D pCenterOfPixel = constructSquareCentralPoint(height / nY, width / nX, nX, nY, j, i, pCenter);
 		List<Ray> rays = new LinkedList<Ray>();
