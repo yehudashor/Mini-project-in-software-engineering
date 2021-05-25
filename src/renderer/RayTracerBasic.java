@@ -73,6 +73,7 @@ public class RayTracerBasic extends RayTracerBase {
 	 * @return the color of the requested point
 	 */
 	private Color calcColor(GeoPoint intersection, Ray ray, int level, double k) {
+		if(intersection == null) return Color.BLACK;
 		Color color = intersection.geometry.getEmission();
 		color = color.add(calcLocalEffects(intersection, ray, level, k));
 		return 1 == level ? color : color.add(calcGlobalEffects(intersection, ray, level, k));
@@ -97,16 +98,16 @@ public class RayTracerBasic extends RayTracerBase {
 			Ray reflectedRay = constructReflectedRay(n, geopoint.point, inRay);
 
 			GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
-			if (reflectedPoint == null)
-				return Color.BLACK;
+//\\			if (reflectedPoint == null)
+//				return Color.BLACK;
 			color = color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
 		}
 		double kt = material.kT, kkt = k * kt;
 		if (kkt > MIN_CALC_COLOR_K) {
 			Ray refractedRay = constructRefractedRay(n, geopoint.point, inRay);
 			GeoPoint refractedPoint = findClosestIntersection(refractedRay);
-			if (refractedPoint == null)
-				return Color.BLACK;
+//			if (refractedPoint == null)
+//				return Color.BLACK;
 			color = color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(kt));
 		}
 		return color;

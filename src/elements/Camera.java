@@ -108,6 +108,15 @@ public class Camera {
 	}
 
 	/**
+	 * width getter
+	 * 
+	 * @return the width
+	 */
+	public double getWidth() {
+		return width;
+	}
+
+	/**
 	 * Set of width & height of the View Plane
 	 * 
 	 * @param width  : width of the View plane
@@ -132,57 +141,99 @@ public class Camera {
 	}
 
 	/**
-	 * Compute the ray that start in camera and intersect the view plane at the
-	 * center of the pixel
+	 * Compute beam rays that intersect the view plane at pixel include the pixel's
+	 * central points Compute the ray that start in camera and intersect the view
+	 * plane at the center of the pixel and after compute list of rays that
 	 * 
 	 * @param nX : Number of columns in the view plane
 	 * @param nY : Number of rows in the view plane
 	 * @param j  : The row's index of the pixel
 	 * @param i  : The column's index of the pixel
-	 * @return : Ray starts in camera and intersect the view plane at the center of
-	 *         the pixel
+	 * @return : beam rays as a list.
 	 */
-	public Ray constructRayThroughPixel(int nX, int nY, int j, int i, double... wh) {
-		Point3D pCenter = p0.add(vTo.scale(distance));
-		 
-		double pixelHeight = wh.length > 0 ? wh[0] : height / nY;
-		double pixelWidth =  wh.length > 0 ? wh[0] : width / nX;
-		double heighFromPc = -((i - (nY - 1) / 2d) * pixelHeight);
-		double widthFromPc = (j - (nX - 1) / 2d) * pixelWidth;
-		Point3D pIJ = pCenter;
+	public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i, int size) {
+		// Point3D pCenter = p0.add(vTo.scale(distance));
 
+//		double pixelHeight = height / nY;
+//		double pixelWidth = width / nX;
+//		double heighFromPc = -((i - (nY - 1) / 2d) * pixelHeight);
+//		double widthFromPc = (j - (nX - 1) / 2d) * pixelWidth;
+//		Point3D pIJ = pCenter;
+//		
+//		if (heighFromPc != 0) {
+//			pIJ = pIJ.add(vUp.scale(heighFromPc));
+//		}
+//		if (widthFromPc != 0) {
+//			pIJ = pIJ.add(vRight.scale(widthFromPc));
+//		}
+//		Ray ray = new Ray(p0, pIJ.subtract(p0));
+//
+//		int size = 17;
+//		List<Ray> rays = new LinkedList<Ray>();
+//		rays.add(ray);
+//		pixelHeight = height / nY / size;
+//		pixelWidth = width / nX / size;
+//		Point3D p = pIJ;
+//		for (int row = 0; row < size; row++) {
+//			for (int colmun = 0; colmun < size; colmun++) {
+//
+//				heighFromPc = -((row - (size - 1) / 2d) * pixelHeight);
+//				widthFromPc = (colmun - (size - 1) / 2d) * pixelWidth;
+//				if (heighFromPc != 0) {
+//					pIJ = pIJ.add(vUp.scale(heighFromPc));
+//				}
+//				if (widthFromPc != 0) {
+//					pIJ = pIJ.add(vRight.scale(widthFromPc));
+//				}
+//				rays.add(new Ray(p0, pIJ.subtract(p0)));
+//				pIJ = p;
+//			}
+//		}
+//
+//		return rays;
+		Point3D pCenter = p0.add(vTo.scale(distance));
+		Point3D pCenterOfPixel = constructSquareCentralPoint(height / nY, width / nX, nX, nY, j, i, pCenter);
+		List<Ray> rays = new LinkedList<Ray>();
+		rays.add(new Ray(p0, pCenter.subtract(p0)));
+
+		if (size != 0) {
+			double squareHeight = height / nY / size;
+			double squareWidth = width / nX / size;
+			for (int row = 0; row < size; row++)
+				for (int colmun = 0; colmun < size; colmun++) {
+					Point3D result = constructSquareCentralPoint(squareHeight, squareWidth, size, size, colmun, row,
+							pCenterOfPixel);
+					rays.add(new Ray(p0, result.subtract(p0)));
+				}
+		}
+		return rays;
+	}
+
+	/**
+	 * calculate central point of square in target plane
+	 * 
+	 * @param squareHeight - The height of the square
+	 * @param squareWidth  - The height of the square
+	 * @param nX           : Number of columns in the target plane
+	 * @param nY           : Number of rows in the target plane
+	 * @param j            : The row's index of the square
+	 * @param i            : The column's index of the square
+	 * @param pCenter      : Central point of the square
+	 * @return point of square in target plane
+	 */
+	private Point3D constructSquareCentralPoint(double squareHeight, double squareWidth, int nX, int nY, int j, int i,
+			Point3D pCenter) {
+
+		double heighFromPc = -((i - (nY - 1) / 2d) * squareHeight);
+		double widthFromPc = (j - (nX - 1) / 2d) * squareWidth;
+		Point3D pIJ = pCenter;
 		if (heighFromPc != 0) {
 			pIJ = pIJ.add(vUp.scale(heighFromPc));
 		}
 		if (widthFromPc != 0) {
 			pIJ = pIJ.add(vRight.scale(widthFromPc));
 		}
-		return new Ray(p0, pIJ.subtract(p0));
-		// return List.of(new Ray(p0, pIJ.subtract(p0)), new Ray(pIJ,
-		// pIJ.subtract(p0)));
-
-//		List<Ray> rays = new LinkedList<>();
-//		rays.add(new Ray(p0, pIJ.subtract(p0)));
-//		int size = 8;
-//		double radius = pixelHeight / 2d;
-//		double radius1 = pixelWidth / 2d;
-//		Point3D start = pIJ.add(vUp.scale(radius));
-//		start = start.add(vRight.scale(radius1));
-//		double h = pixelHeight / size;
-//		double w = pixelWidth / size;
-//		for (double row = h; row < size; row += h) {
-//			Point3D p = start.add(vUp.scale(row));
-//			for (double colmun = w; colmun < size; colmun += w) {
-//				Point3D p1 = p.add(vRight.scale(colmun));
-//				double d = p1.distance(pIJ);
-//				if (d < radius) {
-//					rays.add(new Ray(p0, p1.subtract(p0)));
-//				}
-//			}
-//		}
-//
-//		return rays;
+		return pIJ;
 	}
-	
-	
+
 }

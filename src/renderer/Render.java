@@ -102,21 +102,10 @@ public class Render {
 
 		int nX = imageWriter.getNx();
 		int nY = imageWriter.getNy();
-		int size = 8;
-
 		Color color = Color.BLACK;
-		double h = camera.getHeight() / nY;
-		double w = camera.getHeight() / nX;
 		for (int i = 0; i < nY; i++) {
 			for (int j = 0; j < nX; ++j) {
-				List<Ray> rays = new LinkedList<Ray>();
-				Ray ray = camera.constructRayThroughPixel(nX, nY, j, i);
-				for (int row = 0; row < size; row++) {
-					for (int colmun = 0; colmun < size; colmun++) {
-						rays.add(camera.constructRayThroughPixel(size, size, colmun, row, h, w));
-					}
-				}
-				rays.add(ray);
+				List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, j, i, 17);
 				for (Ray r : rays) {
 					Color color1 = rayTracer.traceRay(r);
 					color = color.add(color1);
@@ -126,20 +115,6 @@ public class Render {
 			}
 		}
 	}
-
-//	public List<Ray> constructBeamRaysThrowTargetarea(int nX, int nY) {
-//		List<Ray> rays = new LinkedList<>();
-//		int size = 8;
-//		double h = height / nX / size;
-//		double w = width / nY / size;
-//		for (double row = 0; row < size; row++)
-//			for (double colmun = 0; colmun < size; colmun++) {
-//				rays.add(constructRayThroughPixel(size, size, colmun, row));
-//			}
-//	}
-//
-//	}
-	// =============================================================================================================
 
 	/**
 	 * print grid on the picture
@@ -179,52 +154,5 @@ public class Render {
 	 * @param center center of pixel
 	 * @return beam rays
 	 */
-	private List<Ray> constructBeamRaysThrowTargetarea(double radius, Point3D center) {
-		List<Ray> rays = null;
-		int size = 4;
 
-		Vector vUp = camera.getvUp();
-		Vector vRight = camera.getvRight();
-		Point3D p0 = camera.getP0();
-		Point3D start = center.add(vUp.scale(radius)).add(vRight.scale(-radius));
-
-		for (double i = 1; i < size; i++) {
-			Point3D p = start.add(vUp.scale(i));
-			for (double j = 1; j < size; j++) {
-				p.add(vRight.scale(j));
-				double d = p.distance(center);
-				if (d < radius) {
-					if (rays == null) {
-						rays = new LinkedList<>();
-					}
-					rays.add(new Ray(p0, p.subtract(p0)));
-				}
-			}
-		}
-		return rays;
-	}
 }
-
-//		for(double i = jump; i < size - 1; i++) {
-//			//Point3D p = start.add(vUp.scale(i));
-//			for(double j = jump; j < size - 1; j++) {
-//				Point3D pIJ = center;
-//
-//				double heighFromPc = -(i - (size - 1) * pixelHeight);
-//				double widthFromPc = j - (size) * pixelWidth;
-//				if (heighFromPc != 0) {
-//					pIJ = pIJ.add(vUp.scale(heighFromPc));
-//				}
-//				if (widthFromPc != 0) {
-//					pIJ = pIJ.add(vRight.scale(widthFromPc));
-//				}
-//				double d =  pIJ.distance(center);
-//				if(d < radius)
-//				{
-//					if(rays == null) {
-//						rays = new LinkedList<>();
-//					}
-//					rays.add(new Ray(p0,  pIJ.subtract(p0)));
-//				}	
-//			}
-//		}
