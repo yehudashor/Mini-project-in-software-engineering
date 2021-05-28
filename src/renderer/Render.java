@@ -105,7 +105,7 @@ public class Render {
 		Color color = Color.BLACK;
 		for (int i = 0; i < nY; i++) {
 			for (int j = 0; j < nX; ++j) {
-				List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, j, i, 17);
+				List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, j, i, 0);
 				for (Ray r : rays) {
 					Color color1 = rayTracer.traceRay(r);
 					color = color.add(color1);

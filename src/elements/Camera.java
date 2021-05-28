@@ -163,7 +163,7 @@ public class Camera {
 		Point3D pCenter = p0.add(vTo.scale(distance));
 		Point3D pCenterOfPixel = constructSquareCentralPoint(height / nY, width / nX, nX, nY, j, i, pCenter);
 		List<Ray> rays = new LinkedList<Ray>();
-		rays.add(new Ray(p0, pCenter.subtract(p0)));
+		rays.add(new Ray(p0, pCenterOfPixel.subtract(p0)));
 
 		if (size != 0) {
 			double squareHeight = height / nY / size;
