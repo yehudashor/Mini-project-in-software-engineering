@@ -71,6 +71,8 @@ public class Camera {
 	}
 
 	/**
+	 * Getter p0
+	 * 
 	 * @return the point p0
 	 */
 	public Point3D getP0() {
@@ -78,6 +80,8 @@ public class Camera {
 	}
 
 	/**
+	 * Getter vector to
+	 * 
 	 * @return the vector to
 	 */
 	public Vector getvTo() {
@@ -85,6 +89,8 @@ public class Camera {
 	}
 
 	/**
+	 * Getter vector Up
+	 * 
 	 * @return the vector Up
 	 */
 	public Vector getvUp() {
@@ -92,6 +98,8 @@ public class Camera {
 	}
 
 	/**
+	 * Getter vector Right
+	 * 
 	 * @return the vector Right
 	 */
 	public Vector getvRight() {
@@ -175,11 +183,11 @@ public class Camera {
 	 * 
 	 * @param squareHeight - The height of the square
 	 * @param squareWidth  - The height of the square
-	 * @param nX           : Number of columns in the target plane
-	 * @param nY           : Number of rows in the target plane
-	 * @param j            : The row's index of the square
-	 * @param i            : The column's index of the square
-	 * @param pCenter      : Central point of the square
+	 * @param nX           - Number of columns in the target plane
+	 * @param nY           - Number of rows in the target plane
+	 * @param j            - The row's index of the square
+	 * @param i            - The column's index of the square
+	 * @param pCenter      - Central point of the square
 	 * @return point of square in target plane
 	 */
 	private Point3D constructSquareCentralPoint(double squareHeight, double squareWidth, int nX, int nY, int j, int i,
