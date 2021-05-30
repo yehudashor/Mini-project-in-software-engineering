@@ -39,7 +39,7 @@ public class ShadowTests {
 				setImageWriter(new ImageWriter("shadowSphereTriangleInitial", 400, 400)) //
 				.setCamera(camera) //
 				.setRayTracer(new RayTracerBasic(scene));
-		render.renderImage();
+		render.renderImage(0);
 		render.writeToImage();
 	}
 
@@ -68,7 +68,7 @@ public class ShadowTests {
 				.setImageWriter(new ImageWriter("shadowTrianglesSphere", 600, 600)) //
 				.setCamera(camera) //
 				.setRayTracer(new RayTracerBasic(scene));
-		render.renderImage();
+		render.renderImage(0);
 		render.writeToImage();
 	}
 
@@ -93,7 +93,7 @@ public class ShadowTests {
 					setImageWriter(new ImageWriter("shadowSphereTriangleMove1", 400, 400)) //
 					.setCamera(camera) // 
 					.setRayTracer(new RayTracerBasic(scene));
-			render.renderImage(); 
+			render.renderImage(0); 
 			render.writeToImage(); 
 
 		}
@@ -117,7 +117,7 @@ public class ShadowTests {
 					setImageWriter(new ImageWriter("shadowSphereTriangleMove2", 400, 400)) //
 					.setCamera(camera) //
 					.setRayTracer(new RayTracerBasic(scene));
-			render.renderImage(); 
+			render.renderImage(0); 
 			render.writeToImage(); 
 
 		}
@@ -143,7 +143,7 @@ public class ShadowTests {
 					setImageWriter(new ImageWriter("shaLwSphereTriangleSpot1", 400, 400)) //
 					.setCamera(camera) // 
 					.setRayTracer(new RayTracerBasic(scene));
-			render.renderImage(); 
+			render.renderImage(0); 
 			render.writeToImage(); 
 		}	
 
@@ -166,7 +166,7 @@ public class ShadowTests {
 							setImageWriter(new ImageWriter("shadowSphereTriangleSpot2", 400, 400)) // 
 							.setCamera(camera) //
 							.setRayTracer(new RayTracerBasic(scene));
-					render.renderImage();
+					render.renderImage(0);
 					render.writeToImage(); 
 
 		}	

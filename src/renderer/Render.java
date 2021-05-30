@@ -3,16 +3,12 @@
  */
 package renderer;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
 
 import elements.Camera;
 import primitives.Color;
-import primitives.Point3D;
 import primitives.Ray;
-import primitives.Vector;
-import scene.Scene;
 
 /**
  * represent the Render
@@ -81,17 +77,17 @@ public class Render {
 	 * @throws builder pattern - if one of that create the Image tougher fields is
 	 *                 null throw MissingResourceException.
 	 */
-	public void renderImage() {
+	public void renderImage(int size) {
 		if (imageWriter == null || camera == null || rayTracer == null) {
 			throw new MissingResourceException("One or more from the parmetrs are null", null, null);
 		}
-
+		
 		int nX = imageWriter.getNx();
 		int nY = imageWriter.getNy();
 		Color color = Color.BLACK;
 		for (int i = 0; i < nY; i++) {
 			for (int j = 0; j < nX; ++j) {
-				List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, j, i, 25);
+				List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, j, i, size);
 				for (Ray r : rays) {
 					Color color1 = rayTracer.traceRay(r);
 					color = color.add(color1);
