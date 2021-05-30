@@ -74,21 +74,7 @@ public class Render {
 	 * @throws builder pattern - if one of that create the Image tougher fields is
 	 *                 null throw MissingResourceException.
 	 */
-//	public void renderImage() {
-//		if (imageWriter == null || camera == null || rayTracer == null) {
-//			throw new MissingResourceException("One or more from the parmetrs are null", null, null);
-//		}
-//		int nX = imageWriter.getNx();
-//		int nY = imageWriter.getNy();
-//		for (int i = 0; i < nY; i++) {
-//			for (int j = 0; j < nX; ++j) {
-//				Ray ray = camera.constructRayThroughPixel(nX, nY, j, i);
-//				imageWriter.writePixel(j, i, rayTracer.traceRay(ray));
-//			}
-//		}
-//	}
 
-	// ===========================================================================================================
 	/**
 	 * renderImage - paint the picture file.
 	 * 
@@ -105,7 +91,7 @@ public class Render {
 		Color color = Color.BLACK;
 		for (int i = 0; i < nY; i++) {
 			for (int j = 0; j < nX; ++j) {
-				List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, j, i, 0);
+				List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, j, i, 25);
 				for (Ray r : rays) {
 					Color color1 = rayTracer.traceRay(r);
 					color = color.add(color1);
@@ -146,13 +132,4 @@ public class Render {
 		}
 
 	}
-
-	/**
-	 * calculates beam rays throw target area
-	 * 
-	 * @param radius radius of circle-target area
-	 * @param center center of pixel
-	 * @return beam rays
-	 */
-
 }

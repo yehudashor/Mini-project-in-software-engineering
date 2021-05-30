@@ -18,6 +18,7 @@ public class Color {
 	private double b = 0.0;
 
 	public static final Color BLACK = new Color();
+	public static final Color WIGHT = new Color(java.awt.Color.WHITE);
 	public static final Color GREEN = new Color(java.awt.Color.GREEN);
 	public static final Color RED = new Color(java.awt.Color.RED);
 
