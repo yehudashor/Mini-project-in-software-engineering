@@ -160,7 +160,7 @@ public class ReflectionRefractionTests {
 				.setCamera(camera) //
 				.setRayTracer(new RayTracerBasic(scene));
 
-		render.renderImage(0);
+		render.renderImage(50);
 		render.writeToImage();
 
 	}
