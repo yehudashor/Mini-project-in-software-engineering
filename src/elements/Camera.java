@@ -52,6 +52,11 @@ public class Camera {
 	private double distance;
 
 	/**
+	 * View Plane center point
+	 */
+	private Point3D pCenter;
+
+	/**
 	 * constructor
 	 * 
 	 * @param p0  : point 3D
@@ -145,6 +150,7 @@ public class Camera {
 	 */
 	public Camera setDistance(double distance) {
 		this.distance = distance;
+		pCenter = p0.add(vTo.scale(distance));
 		return this;
 	}
 
@@ -159,42 +165,41 @@ public class Camera {
 	 * @param i  : The column's index of the pixel
 	 * @return : beam rays as a list.
 	 */
-	public List<Ray> constructRaysThroughPixel(int nX, int nY, int j, int i, int size) {
-		Point3D pCenter = p0.add(vTo.scale(distance));
+	public Ray constructRaysThroughPixel(int nX, int nY, int j, int i, int size) {
+//		double rY = height / nY;
+//		double rX = width / nX;
 		Point3D pCenterOfPixel = constructSquareCentralPoint(height / nY, width / nX, nX, nY, j, i, pCenter);
-		List<Ray> rays = new LinkedList<Ray>();
-		rays.add(new Ray(p0, pCenterOfPixel.subtract(p0)));
-
-		if (size != 0) {
-			double squareHeight = height / nY / size;
-			double squareWidth = width / nX / size;
-			for (int row = 0; row < size; row++)
-				for (int colmun = 0; colmun < size; colmun++) {
-					Point3D result = constructSquareCentralPoint(squareHeight, squareWidth, size, size, colmun, row,
-							pCenterOfPixel);
-					rays.add(new Ray(p0, result.subtract(p0)));
-				}
-		}
-		return rays;
+//		if (size <= 1)
+//			return List.of(new Ray(p0, pCenterOfPixel.subtract(p0)));
+//		List<Ray> rays = new LinkedList<Ray>();
+//		double squareHeight = rY / size;
+//		double squareWidth = rX / size;
+//		for (int row = 0; row < size; row++)
+//			for (int colmun = 0; colmun < size; colmun++) {
+//				Point3D result = constructSquareCentralPoint(squareHeight, squareWidth, size, size, colmun, row,
+//						pCenterOfPixel);
+//				rays.add(new Ray(p0, result.subtract(p0)));
+//			}
+		return new Ray(p0, pCenterOfPixel.subtract(p0));
 	}
-
+	
 	/**
-	 * calculate central point of square in target plane
+	 * calculate central point of square in target plane.
 	 * 
-	 * @param squareHeight - The height of the square
-	 * @param squareWidth  - The height of the square
-	 * @param nX           - Number of columns in the target plane
-	 * @param nY           - Number of rows in the target plane
-	 * @param j            - The row's index of the square
-	 * @param i            - The column's index of the square
-	 * @param pCenter      - Central point of the square
+	 * @param squareHeight - The height of the square.
+	 * @param squareWidth  - The height of the square.
+	 * @param nX           - Number of columns in the target plane.
+	 * @param nY           - Number of rows in the target plane.
+	 * @param j            - The row's index of the square.
+	 * @param i            - The column's index of the square.
+	 * @param pCenter      - Central point of the square.
 	 * @return point of square in target plane
 	 */
 	private Point3D constructSquareCentralPoint(double squareHeight, double squareWidth, int nX, int nY, int j, int i,
 			Point3D pCenter) {
 
-		double heighFromPc = -((i - (nY - 1) / 2d) * squareHeight);
-		double widthFromPc = (j - (nX - 1) / 2d) * squareWidth;
+		double heighFromPc = -((i - (nY) / 2d) * squareHeight);
+		double widthFromPc = (j - (nX) / 2d) * squareWidth;
 		Point3D pIJ = pCenter;
 		if (heighFromPc != 0) {
 			pIJ = pIJ.add(vUp.scale(heighFromPc));
@@ -205,4 +210,25 @@ public class Camera {
 		return pIJ;
 	}
 
+	/**
+	 * 
+	 * @param nX
+	 * @param nY
+	 * @param j
+	 * @param i
+	 * @param size
+	 * @return
+	 */
+	public Point3D[] verticesOfPixel(int nX, int nY, int j, int i) {
+		Point3D[] vertices = new Point3D[4];
+		Point3D pCenter = p0.add(vTo.scale(distance));
+		Point3D pCenterOfPixel = constructSquareCentralPoint(height / nY, width / nX, nX, nY, j, i, pCenter);
+		double squareHeight = height / nY / 2;
+		double squareWidth = width / nX / 2;
+		vertices[0] = pCenterOfPixel.add(vTo.scale(squareHeight)).add(vRight.scale(-squareWidth));
+		vertices[1] = pCenterOfPixel.add(vTo.scale(squareHeight)).add(vRight.scale(squareWidth));
+		vertices[2] = pCenterOfPixel.add(vTo.scale(-squareHeight)).add(vRight.scale(squareWidth));
+		vertices[3] = pCenterOfPixel.add(vTo.scale(-squareHeight)).add(vRight.scale(-squareWidth));
+		return vertices;
+	}
 }

@@ -3,11 +3,13 @@
  */
 package renderer;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
 
 import elements.Camera;
 import primitives.Color;
+import primitives.Point3D;
 import primitives.Ray;
 
 /**
@@ -70,32 +72,76 @@ public class Render {
 	 * @throws builder pattern - if one of that create the Image tougher fields is
 	 *                 null throw MissingResourceException.
 	 */
-
-	/**
-	 * renderImage - paint the picture file.
-	 * 
-	 * @throws builder pattern - if one of that create the Image tougher fields is
-	 *                 null throw MissingResourceException.
-	 */
 	public void renderImage(int size) {
 		if (imageWriter == null || camera == null || rayTracer == null) {
 			throw new MissingResourceException("One or more from the parmetrs are null", null, null);
 		}
-		
+
 		int nX = imageWriter.getNx();
 		int nY = imageWriter.getNy();
 		Color color = Color.BLACK;
+		Point3D pointP0 = camera.getP0();
 		for (int i = 0; i < nY; i++) {
 			for (int j = 0; j < nX; ++j) {
-				List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, j, i, size);
-				for (Ray r : rays) {
-					Color color1 = rayTracer.traceRay(r);
-					color = color.add(color1);
-				}
-				imageWriter.writePixel(j, i, color.reduce(rays.size()));
+				Ray ray = camera.constructRaysThroughPixel(nX, nY, j, i, size);
+				Point3D[] p = camera.verticesOfPixel(nX, nY, j, i);
+				
+//				for (Point3D point : p)
+//					rays.add(new Ray(pointP0, point.subtract(pointP0)));
+				imageWriter.writePixel(j, i, color);
 				color = Color.BLACK;
 			}
 		}
+	}
+
+	/**
+	 * 
+	 * @param rays
+	 * @param color
+	 * @return
+	 */
+	private Color average(List<Ray> rays) {
+		List<Color> c = new LinkedList<Color>();
+		Color color = Color.BLACK;
+		Color color1 = Color.BLACK;
+		for (Ray r : rays) {
+			color1 = rayTracer.traceRay(r);
+			color = color.add(color1);
+			c.add(color1);
+		}
+
+		color1 = color.reduce(rays.size());
+		for (Color col : c) {
+			if (col != color1)
+				return null;
+		}
+		return color1;
+	}
+
+	private Point3D[][] centerOfPixel(Point3D[] vertices) {
+		Point3D up = vertices[0].middlePoint(vertices[1]);
+		Point3D left = vertices[0].middlePoint(vertices[2]);
+		Point3D right = vertices[1].middlePoint(vertices[3]);
+		Point3D down = vertices[2].middlePoint(vertices[3]);
+		Point3D center = vertices[0].middlePoint(vertices[3]);
+		Point3D p = camera.getP0();
+		
+
+		Point3D[][] vSquars = new Point3D[4][4];
+		
+		// =====================================================================
+		
+		return vSquars;
+	}
+
+	private Color v(List<Ray> rays, Point3D[] vertices, int n) {
+
+		Color color = average(rays);
+
+		if (color != null)
+			return color;
+
+		return null;
 	}
 
 	/**
@@ -126,6 +172,39 @@ public class Render {
 		} else {
 			throw new MissingResourceException("One or more from the parmetrs are null", null, null);
 		}
-
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	/**
+//	 * renderImage - paint the picture file.
+//	 * 
+//	 * @param size - number of squares in each pixel
+//	 * @throws builder pattern - if one of that create the Image tougher fields is
+//	 *                 null throw MissingResourceException.
+//	 */
+//	public void renderImage(int size) {
+//		if (imageWriter == null || camera == null || rayTracer == null) {
+//			throw new MissingResourceException("One or more from the parmetrs are null", null, null);
+//		}
+//		
+//		int nX = imageWriter.getNx();
+//		int nY = imageWriter.getNy();
+//		for (int i = 0; i < nY; i++) {
+//			for (int j = 0; j < nX; ++j) {
+//				List<Ray> rays = camera.constructRaysThroughPixel(nX, nY, j, i, size);
+//				Color color = Color.BLACK;
+//				for (Ray r : rays)
+//					color = color.add(rayTracer.traceRay(r));
+//				imageWriter.writePixel(j, i, color.reduce(rays.size()));
+//			}
+//		}
+//	}
+
 }

@@ -119,4 +119,13 @@ public class Point3D {
 	public double distance(Point3D point) {
 		return Math.sqrt(this.distanceSquared(point));
 	}
+	
+	/**
+	 * Calculate a point in the middle of two points.
+	 * @param point - other point.
+	 * @return - new point in the middle of two points. 
+	 */
+	public Point3D middlePoint(Point3D other) {
+		return new Point3D((this.x.coord + other.x.coord) / 2, (this.y.coord + other.y.coord) / 2,(this.z.coord + other.z.coord) / 2);
+	}
 }
