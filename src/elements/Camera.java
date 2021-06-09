@@ -169,6 +169,9 @@ public class Camera {
 //		double rY = height / nY;
 //		double rX = width / nX;
 		Point3D pCenterOfPixel = constructSquareCentralPoint(height / nY, width / nX, nX, nY, j, i, pCenter);
+		
+		
+		
 //		if (size <= 1)
 //			return List.of(new Ray(p0, pCenterOfPixel.subtract(p0)));
 //		List<Ray> rays = new LinkedList<Ray>();
@@ -219,16 +222,18 @@ public class Camera {
 	 * @param size
 	 * @return
 	 */
-	public Point3D[] verticesOfPixel(int nX, int nY, int j, int i) {
-		Point3D[] vertices = new Point3D[4];
-		Point3D pCenter = p0.add(vTo.scale(distance));
+	public Ray[] verticesOfPixel(int nX, int nY, int j, int i) {
+		Ray[] vertices = new Ray[4];
 		Point3D pCenterOfPixel = constructSquareCentralPoint(height / nY, width / nX, nX, nY, j, i, pCenter);
 		double squareHeight = height / nY / 2;
 		double squareWidth = width / nX / 2;
-		vertices[0] = pCenterOfPixel.add(vTo.scale(squareHeight)).add(vRight.scale(-squareWidth));
-		vertices[1] = pCenterOfPixel.add(vTo.scale(squareHeight)).add(vRight.scale(squareWidth));
-		vertices[2] = pCenterOfPixel.add(vTo.scale(-squareHeight)).add(vRight.scale(squareWidth));
-		vertices[3] = pCenterOfPixel.add(vTo.scale(-squareHeight)).add(vRight.scale(-squareWidth));
+		vertices[0] = new Ray(p0, pCenterOfPixel.add(vTo.scale(squareHeight)).add(vRight.scale(-squareWidth)).subtract(p0));
+		vertices[1] = new Ray(p0, pCenterOfPixel.add(vTo.scale(squareHeight)).add(vRight.scale(squareWidth)).subtract(p0));
+		vertices[2] = new Ray(p0, pCenterOfPixel.add(vTo.scale(-squareHeight)).add(vRight.scale(squareWidth)).subtract(p0));
+		vertices[3] = new Ray(p0, pCenterOfPixel.add(vTo.scale(-squareHeight)).add(vRight.scale(-squareWidth)).subtract(p0));
 		return vertices;
 	}
+	
+	
+	
 }

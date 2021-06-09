@@ -3,6 +3,7 @@
  */
 package renderer;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
@@ -80,12 +81,15 @@ public class Render {
 		int nX = imageWriter.getNx();
 		int nY = imageWriter.getNy();
 		Color color = Color.BLACK;
-		Point3D pointP0 = camera.getP0();
 		for (int i = 0; i < nY; i++) {
 			for (int j = 0; j < nX; ++j) {
 				Ray ray = camera.constructRaysThroughPixel(nX, nY, j, i, size);
-				Point3D[] p = camera.verticesOfPixel(nX, nY, j, i);
-				
+				Ray[] r = camera.verticesOfPixel(nX, nY, j, i);
+				Color[][] colors = new Color[size][size];
+				colors[0][0] = rayTracer.traceRay(r[0]);
+			    colors[0][size] = rayTracer.traceRay(r[1]);
+	     		colors[size][0] = rayTracer.traceRay(r[2]);
+				colors[size][size] = rayTracer.traceRay(r[3]);
 //				for (Point3D point : p)
 //					rays.add(new Ray(pointP0, point.subtract(pointP0)));
 				imageWriter.writePixel(j, i, color);
@@ -124,23 +128,41 @@ public class Render {
 		Point3D right = vertices[1].middlePoint(vertices[3]);
 		Point3D down = vertices[2].middlePoint(vertices[3]);
 		Point3D center = vertices[0].middlePoint(vertices[3]);
-		Point3D p = camera.getP0();
 		
-
-		Point3D[][] vSquars = new Point3D[4][4];
-		
-		// =====================================================================
-		
-		return vSquars;
+		return new Point3D[][] {{ vertices[0], up, left, center}, // up left square
+			{up, vertices[1], center, right}, // up right square
+			{left, center, vertices[2], down }, // down left
+			{center, right,  down, vertices[3]}}; // down right;
 	}
+	
+	private Ray[][] t(Point3D[][] points){
+		Ray[][] rays = new Ray[4][4];
+		Point3D point = camera.getP0();
+		for(int i = 0; i < 4; i++) {
+			for(int j = 0; j < 4; j++) {
+				rays[i][j] = new Ray(point, points[i][j].subtract(point));
+			}
+		}
+		return rays;
+	}
+	
+	
 
-	private Color v(List<Ray> rays, Point3D[] vertices, int n) {
-
+	private Color v(Color[][] colors, int size) {
+		
+		
 		Color color = average(rays);
 
-		if (color != null)
+		if (color != null || n == 0)
 			return color;
-
+		Point3D[][] points = centerOfPixel(p);
+		Ray[][] rays1 = t(points);
+		color = Color.BLACK;
+		for(int i = 0; i < 4; i++) {
+			List<Ray> rays2 = List.of(rays1[i]);
+			
+			color = color.add(v(rays2, points[i], n - 1));
+		}
 		return null;
 	}
 
@@ -206,5 +228,4 @@ public class Render {
 //			}
 //		}
 //	}
-
 }
